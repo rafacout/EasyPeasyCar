@@ -13,13 +13,13 @@ public class Store : BaseEntity
         Email = email;
     }
     
-    public string Name { get; set; }
-    public string Address { get; set; }
-    public string City { get; set; }
-    public string State { get; set; }
-    public string Zip { get; set; }
-    public string Phone { get; set; }
-    public string Email { get; set; }
+    public string Name { get; private set; }
+    public string Address { get; private set; }
+    public string City { get; private set; }
+    public string State { get; private set; }
+    public string Zip { get; private set; }
+    public string Phone { get; private set; }
+    public string Email { get; private set; }
     
     public void Update(string name, string address, string city, string state, string zip, string phone, string email)
     {

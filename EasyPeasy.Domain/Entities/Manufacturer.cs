@@ -7,10 +7,9 @@ public class Manufacturer : BaseEntity
         Name = name;
         Country = country;
     }
-    
-    public string Name { get; set; }
-    public string Country { get; set; }
-    
+    public string Name { get; private set; }
+    public string Country { get; private set; }
+
     public void Update(string name, string country)
     {
         Name = name;

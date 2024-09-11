@@ -1,30 +1,39 @@
-﻿namespace EasyPeasy.Domain.Entities;
+﻿using EasyPeasy.Domain.Enum;
+
+namespace EasyPeasy.Domain.Entities;
 
 public class Rent : BaseEntity
 {
-    public Rent(User user, Store store, Vehicle vehicle, DateTime rentDate, DateTime returnDate, decimal total)
+    public Rent(Guid userId, Guid storePickUpId, Guid storeDropOffId, Guid? vehicleId, Guid? categoryId, StatusRent status, DateTime startDate, DateTime expectedDate, DateTime? returnedDate, float total)
     {
-        User = user;
-        Store = store;
-        Vehicle = vehicle;
-        RentDate = rentDate;
-        ReturnDate = returnDate;
+        UserId = userId;
+        StorePickUpId = storePickUpId;
+        StoreDropOffId = storeDropOffId;
+        VehicleId = vehicleId;
+        CategoryId = categoryId;
+        Status = status;
+        StartDate = startDate;
+        ExpectedDate = expectedDate;
+        ReturnedDate = returnedDate;
         Total = total;
     }
-    public User User { get; set; }
-    public Store Store { get; set; }
-    public Vehicle Vehicle { get; set; }
-    public DateTime RentDate { get; set; }
-    public DateTime ReturnDate { get; set; }
-    public decimal Total { get; set; }
+
+    public Guid UserId { get; private set; }
+    public Guid StorePickUpId { get; private set; }
+    public Guid StoreDropOffId { get; private set; }
+    public Guid? VehicleId { get; private set; }
+    public Guid? CategoryId { get; private set; }
+    public StatusRent Status { get; set; }
     
-    public void Update(User user, Store store, Vehicle vehicle, DateTime rentDate, DateTime returnDate, decimal total)
-    {
-        User = user;
-        Store = store;
-        Vehicle = vehicle;
-        RentDate = rentDate;
-        ReturnDate = returnDate;
-        Total = total;
-    }
+    public DateTime StartDate { get; private set; }
+    public DateTime ExpectedDate { get; private set; }
+    public DateTime? ReturnedDate { get; private set; }
+    public float Total { get; private set; }
+    
+    public User User { get; private set; }
+    public Store StorePickUp { get; private set; }
+    public Store StoreDropOff { get; private set; }
+    public Vehicle? Vehicle { get; private set; }
+    public Category Category { get; private set; }
+
 }

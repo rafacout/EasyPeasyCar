@@ -1,19 +1,28 @@
-﻿namespace EasyPeasy.Domain.Entities;
+﻿using EasyPeasy.Domain.Enum;
+
+namespace EasyPeasy.Domain.Entities;
 
 public class Model : BaseEntity
 {
-    public Model(string name, Manufacturer manufacturer)
+    public Model(string name, int year, Guid manufacturerId, Guid categoryId, TransmissionType transmission, string motor)
     {
         Name = name;
-        Manufacturer = manufacturer;
+        Year = year;
+        ManufacturerId = manufacturerId;
+        CategoryId = categoryId;
+        Transmission = transmission;
+        Motor = motor;
     }
     
-    public string Name { get; set; }
-    public Manufacturer Manufacturer { get; set; }
+    public string Name { get; private set; }
+    public int Year { get; private set; }
+    public Guid ManufacturerId { get; private set; }
+    public Guid CategoryId { get; private set; }
+    public TransmissionType Transmission { get; private set; }
+    public string Motor { get; private set; }
     
-    public void Update(string name, Manufacturer manufacturer)
-    {
-        Name = name;
-        Manufacturer = manufacturer;
-    }
+    public Manufacturer Manufacturer { get; private set; }
+    public Category Category { get; private set; }
+
+    public ICollection<Vehicle> Vehicles { get; private set; }
 }

@@ -7,8 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Enum\" />
       <Folder Include="Exceptions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Entities\RentItem.cs" />
     </ItemGroup>
 
 </Project>

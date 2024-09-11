@@ -1,0 +1,7 @@
+﻿namespace EasyPeasy.Domain.Enum;
+
+public enum RoleType
+{
+    Admin = 1,
+    User = 2
+}
