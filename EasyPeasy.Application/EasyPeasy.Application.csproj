@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Class1.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\Category\" />
+      <Folder Include="Commands\Manufacturer\" />
+      <Folder Include="Commands\Model\" />
+      <Folder Include="Commands\Rent\" />
+      <Folder Include="Commands\Store\" />
+      <Folder Include="Commands\User\" />
+      <Folder Include="Commands\Vehicle\" />
+      <Folder Include="Queries\Manufacturer\" />
+      <Folder Include="Queries\Model\" />
+      <Folder Include="Queries\Rent\" />
+      <Folder Include="Queries\Store\" />
+      <Folder Include="Queries\User\" />
+      <Folder Include="Queries\Vehicle\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasyPeasy.Domain\EasyPeasy.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
