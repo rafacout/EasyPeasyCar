@@ -19,6 +19,7 @@ public class EasyPeasyDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
     
+    public DbSet<Category> Categories { get; set; }
     public DbSet<Manufacturer> Manufacturers { get; set; }
     public DbSet<Model> Models { get; set; }
     public DbSet<Rent> Rents { get; set; }

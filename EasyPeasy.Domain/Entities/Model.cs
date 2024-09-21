@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using System.Data;
+using EasyPeasy.Domain.Enum;
 
 namespace EasyPeasy.Domain.Entities;
 
