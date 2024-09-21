@@ -19,23 +19,23 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Guid> CreateAsync(User user)
+    public async Task<Guid> CreateAsync(User entity)
     {
-        await _dbContext.Users.AddAsync(user);
-        return user.Id;
+        await _dbContext.Users.AddAsync(entity);
+        return entity.Id;
     }
     
-    public async Task UpdateAsync(User user)
+    public async Task UpdateAsync(User entity)
     {
-        _dbContext.Users.Update(user);
+        _dbContext.Users.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Users.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (user is not null) { 
-            _dbContext.Users.Remove(user);
+        if (entity is not null) { 
+            _dbContext.Users.Remove(entity);
         }
     }
 

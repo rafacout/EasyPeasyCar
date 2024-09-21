@@ -19,23 +19,23 @@ public class VehicleRepository : IVehicleRepository
         return await _dbContext.Vehicles.FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Guid> CreateAsync(Vehicle vehicle)
+    public async Task<Guid> CreateAsync(Vehicle entity)
     {
-        await _dbContext.Vehicles.AddAsync(vehicle);
-        return vehicle.Id;
+        await _dbContext.Vehicles.AddAsync(entity);
+        return entity.Id;
     }
     
-    public async Task UpdateAsync(Vehicle vehicle)
+    public async Task UpdateAsync(Vehicle entity)
     {
-        _dbContext.Vehicles.Update(vehicle);
+        _dbContext.Vehicles.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var vehicle = await _dbContext.Vehicles.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Vehicles.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (vehicle is not null) { 
-            _dbContext.Vehicles.Remove(vehicle);
+        if (entity is not null) { 
+            _dbContext.Vehicles.Remove(entity);
         }
     }
 }

@@ -19,23 +19,23 @@ public class ModelRepository : IModelRepository
         return await _dbContext.Models.FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Guid> CreateAsync(Model model)
+    public async Task<Guid> CreateAsync(Model entity)
     {
-        await _dbContext.Models.AddAsync(model);
-        return model.Id;
+        await _dbContext.Models.AddAsync(entity);
+        return entity.Id;
     }
     
-    public async Task UpdateAsync(Model model)
+    public async Task UpdateAsync(Model entity)
     {
-        _dbContext.Models.Update(model);
+        _dbContext.Models.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var model = await _dbContext.Models.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Models.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (model is not null) { 
-            _dbContext.Models.Remove(model);
+        if (entity is not null) { 
+            _dbContext.Models.Remove(entity);
         }
     }
     

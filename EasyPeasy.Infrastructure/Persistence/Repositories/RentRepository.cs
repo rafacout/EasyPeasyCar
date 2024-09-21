@@ -19,23 +19,23 @@ public class RentRepository : IRentRepository
         return await _dbContext.Rents.FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Guid> CreateAsync(Rent rent)
+    public async Task<Guid> CreateAsync(Rent entity)
     {
-        await _dbContext.Rents.AddAsync(rent);
-        return rent.Id;
+        await _dbContext.Rents.AddAsync(entity);
+        return entity.Id;
     }
     
-    public async Task UpdateAsync(Rent rent)
+    public async Task UpdateAsync(Rent entity)
     {
-        _dbContext.Rents.Update(rent);
+        _dbContext.Rents.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var rent = await _dbContext.Rents.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Rents.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (rent is not null) { 
-            _dbContext.Rents.Remove(rent);
+        if (entity is not null) { 
+            _dbContext.Rents.Remove(entity);
         }
     }
     

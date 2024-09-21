@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyPeasy.Domain", "EasyPea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPeasy.Infrastructure", "EasyPeasy.Infrastructure\EasyPeasy.Infrastructure.csproj", "{30DF1EBB-E384-4C25-96D0-731C4AC2F3F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPeasy.API", "EasyPeasy.API\EasyPeasy.API.csproj", "{D40C05B7-2426-49BA-8E49-990CC3707948}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPeasy.Application", "EasyPeasy.Application\EasyPeasy.Application.csproj", "{C9575F87-99F9-4386-81AC-A6225529E789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{30DF1EBB-E384-4C25-96D0-731C4AC2F3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30DF1EBB-E384-4C25-96D0-731C4AC2F3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30DF1EBB-E384-4C25-96D0-731C4AC2F3F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40C05B7-2426-49BA-8E49-990CC3707948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40C05B7-2426-49BA-8E49-990CC3707948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40C05B7-2426-49BA-8E49-990CC3707948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40C05B7-2426-49BA-8E49-990CC3707948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9575F87-99F9-4386-81AC-A6225529E789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9575F87-99F9-4386-81AC-A6225529E789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9575F87-99F9-4386-81AC-A6225529E789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9575F87-99F9-4386-81AC-A6225529E789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

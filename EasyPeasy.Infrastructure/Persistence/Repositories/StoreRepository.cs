@@ -19,23 +19,23 @@ public class StoreRepository : IStoreRepository
         return await _dbContext.Stores.FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Guid> CreateAsync(Store store)
+    public async Task<Guid> CreateAsync(Store entity)
     {
-        await _dbContext.Stores.AddAsync(store);
-        return store.Id;
+        await _dbContext.Stores.AddAsync(entity);
+        return entity.Id;
     }
     
-    public async Task UpdateAsync(Store store)
+    public async Task UpdateAsync(Store entity)
     {
-        _dbContext.Stores.Update(store);
+        _dbContext.Stores.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var store = await _dbContext.Stores.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Stores.FirstOrDefaultAsync(s => s.Id == id);
 
-        if (store is not null) { 
-            _dbContext.Stores.Remove(store);
+        if (entity is not null) { 
+            _dbContext.Stores.Remove(entity);
         }
     }
 }
