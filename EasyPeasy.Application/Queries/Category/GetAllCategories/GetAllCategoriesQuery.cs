@@ -2,6 +2,6 @@
 
 namespace EasyPeasy.Application.Queries.Category.GetAllCategories;
 
-public class GetAllCategoriesQuery : IRequest<IEnumerable<Domain.Entities.Category>>
+public class GetAllCategoriesQuery : IRequest<List<Domain.Entities.Category>>
 {
 }

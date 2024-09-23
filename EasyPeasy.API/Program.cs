@@ -1,8 +1,6 @@
 using EasyPeasy.Application.Queries.Category.GetAllCategories;
 using EasyPeasy.Domain.Repositories;
-using EasyPeasy.Infrastructure;
 using EasyPeasy.Infrastructure.Context;
-using EasyPeasy.Infrastructure.Persistence;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(typeof(GetAllCategoriesQuery).Assembly);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllCategoriesQuery).Assembly));
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IManufacturerRepository, ManufactureRepository>();

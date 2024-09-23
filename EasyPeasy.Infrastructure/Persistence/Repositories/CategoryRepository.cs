@@ -38,4 +38,9 @@ public class CategoryRepository : ICategoryRepository
             _dbContext.Categories.Remove(entity);
         }
     }
+
+    public async Task<List<Category>> GetAllAsync()
+    {
+        return await _dbContext.Categories.ToListAsync();
+    }
 }

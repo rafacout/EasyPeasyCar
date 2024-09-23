@@ -11,7 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\Category\" />
       <Folder Include="Commands\Manufacturer\" />
       <Folder Include="Commands\Model\" />
       <Folder Include="Commands\Rent\" />
@@ -27,11 +26,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\EasyPeasy.Domain\EasyPeasy.Domain.csproj" />
+      <ProjectReference Include="..\EasyPeasy.Infrastructure\EasyPeasy.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
