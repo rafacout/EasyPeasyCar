@@ -24,6 +24,4 @@ public class Model : BaseEntity
     
     public Manufacturer Manufacturer { get; private set; }
     public Category Category { get; private set; }
-
-    public ICollection<Vehicle> Vehicles { get; private set; }
 }
