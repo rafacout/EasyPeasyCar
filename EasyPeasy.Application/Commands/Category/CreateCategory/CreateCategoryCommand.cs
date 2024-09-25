@@ -4,5 +4,5 @@ namespace EasyPeasy.Application.Commands.Category.CreateCategory;
 
 public class CreateCategoryCommand : IRequest<Guid>
 {
-    public string Name { get; set; }
+    public string Name { get; private set; }
 }
