@@ -15,7 +15,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     public async Task<Guid> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
-        
+
         var category = new Domain.Entities.Category(request.Name);
         var id = await _unitOfWork.Categories.CreateAsync(category);
         await _unitOfWork.CompleteAsync();
