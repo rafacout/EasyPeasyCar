@@ -1,18 +1,18 @@
 ﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
-namespace EasyPeasy.Application.Commands.Manufacturer;
+namespace EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
 
-public class ManufacturerCommandHandler : IRequestHandler<ManufacturerCommand, Guid>
+public class CreateManufacturerCommandHandler : IRequestHandler<CreateManufacturerCommand, Guid>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public ManufacturerCommandHandler(IUnitOfWork unitOfWork)
+    public CreateManufacturerCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Guid> Handle(ManufacturerCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateManufacturerCommand request, CancellationToken cancellationToken)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
 

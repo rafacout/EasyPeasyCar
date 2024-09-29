@@ -9,10 +9,13 @@ public class UnitOfWork : IUnitOfWork
     private readonly EasyPeasyDbContext _dbContext;
     private IDbContextTransaction _transaction;
 
-    public UnitOfWork(EasyPeasyDbContext dbContext, IManufacturerRepository manufacturers, IRentRepository rents, IStoreRepository stores, IUserRepository users, IVehicleRepository vehicles, ICategoryRepository categories)
+    public UnitOfWork(EasyPeasyDbContext dbContext, IManufacturerRepository manufacturers, IRentRepository rents,
+        IStoreRepository stores, IUserRepository users, IVehicleRepository vehicles, ICategoryRepository categories,
+        IModelRepository models)
     {
         _dbContext = dbContext;
         Manufacturers = manufacturers;
+        Models = models;    
         Rents = rents;
         Stores = stores;
         Users = users;
@@ -23,6 +26,7 @@ public class UnitOfWork : IUnitOfWork
     public ICategoryRepository Categories { get; }
     public IManufacturerRepository Manufacturers { get; }
     public IRentRepository Rents { get; }
+    public IModelRepository Models { get; }
     public IStoreRepository Stores { get; }
     public IUserRepository Users { get; }
     public IVehicleRepository Vehicles { get; }

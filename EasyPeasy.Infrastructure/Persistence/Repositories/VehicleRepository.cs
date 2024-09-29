@@ -38,4 +38,9 @@ public class VehicleRepository : IVehicleRepository
             _dbContext.Vehicles.Remove(entity);
         }
     }
+
+    public async Task<List<Vehicle>> GetAllAsync()
+    {
+        return await _dbContext.Vehicles.ToListAsync();
+    }
 }

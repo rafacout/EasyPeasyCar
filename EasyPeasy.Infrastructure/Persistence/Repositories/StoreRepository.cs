@@ -38,4 +38,9 @@ public class StoreRepository : IStoreRepository
             _dbContext.Stores.Remove(entity);
         }
     }
+
+    public async Task<List<Store>> GetAllAsync()
+    {
+        return await _dbContext.Stores.ToListAsync();
+    }
 }

@@ -5,4 +5,5 @@ namespace EasyPeasy.Domain.Repositories;
 
 public interface IManufacturerRepository : IBaseRepository<Manufacturer>
 {
+    Task<List<Manufacturer>> GetAllAsync();
 }

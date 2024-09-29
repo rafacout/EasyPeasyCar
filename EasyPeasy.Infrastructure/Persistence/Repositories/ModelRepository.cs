@@ -38,5 +38,9 @@ public class ModelRepository : IModelRepository
             _dbContext.Models.Remove(entity);
         }
     }
-    
+
+    public async Task<List<Model>> GetAllAsync()
+    {
+        return await _dbContext.Models.ToListAsync();
+    }
 }

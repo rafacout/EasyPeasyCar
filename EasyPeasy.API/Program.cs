@@ -1,3 +1,4 @@
+using EasyPeasy.Application.Mapping;
 using EasyPeasy.Application.Queries.Category.GetAllCategories;
 using EasyPeasy.Domain.Repositories;
 using EasyPeasy.Infrastructure.Context;
@@ -17,6 +18,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllCategoriesQuery).Assembly));
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IManufacturerRepository, ManufactureRepository>();

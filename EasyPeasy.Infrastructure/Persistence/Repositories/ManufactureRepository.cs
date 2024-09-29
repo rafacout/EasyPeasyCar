@@ -39,4 +39,9 @@ public class ManufactureRepository : IManufacturerRepository
             _dbContext.Manufacturers.Remove(entity);
         }
     }
+
+    public async Task<List<Manufacturer>> GetAllAsync()
+    {
+        return await _dbContext.Manufacturers.ToListAsync();
+    }
 }

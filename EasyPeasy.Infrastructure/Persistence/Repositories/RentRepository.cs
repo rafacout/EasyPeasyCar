@@ -38,5 +38,9 @@ public class RentRepository : IRentRepository
             _dbContext.Rents.Remove(entity);
         }
     }
-    
+
+    public async Task<List<Rent>> GetAllAsync()
+    {
+        return await _dbContext.Rents.ToListAsync();
+    }
 }
