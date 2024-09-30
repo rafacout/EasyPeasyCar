@@ -11,26 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\Manufacturer\DeleteManufacturer\" />
-      <Folder Include="Commands\Manufacturer\UpdateManufacturer\" />
-      <Folder Include="Commands\Model\CreateModel\" />
-      <Folder Include="Commands\Model\DeleteModel\" />
-      <Folder Include="Commands\Model\UpdateModel\" />
-      <Folder Include="Commands\Rent\CreateRent\" />
-      <Folder Include="Commands\Rent\DeleteRent\" />
-      <Folder Include="Commands\Rent\UpdateRent\" />
-      <Folder Include="Commands\Store\CreateStore\" />
-      <Folder Include="Commands\Store\DeleteStore\" />
-      <Folder Include="Commands\Store\UpdateStore\" />
-      <Folder Include="Commands\User\CreateUser\" />
-      <Folder Include="Commands\User\DeleteUser\" />
-      <Folder Include="Commands\User\UpdateUser\" />
-      <Folder Include="Commands\Vehicle\CreateVehicle\" />
-      <Folder Include="Commands\Vehicle\DeleteVehicle\" />
-      <Folder Include="Commands\Vehicle\UpdateVehicle\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
       <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
