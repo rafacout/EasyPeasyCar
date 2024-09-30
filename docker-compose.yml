@@ -1,0 +1,6 @@
+﻿services:
+  easypeasy.api:
+    image: easypeasy.api
+    build:
+      context: .
+      dockerfile: EasyPeasy.API/Dockerfile

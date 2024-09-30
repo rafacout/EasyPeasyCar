@@ -11,10 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPeasy.API", "EasyPeasy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPeasy.Application", "EasyPeasy.Application\EasyPeasy.Application.csproj", "{C9575F87-99F9-4386-81AC-A6225529E789}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{91B17EC9-2BB7-491B-BAFF-EF2813591AE6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33D43669-4FA4-47A7-AF3F-F007F98421BA}"
 	ProjectSection(SolutionItems) = preProject
-		LICENSE = LICENSE
+		docker-compose.yml = docker-compose.yml
 		README.md = README.md
+		LICENSE = LICENSE
 	EndProjectSection
 EndProject
 Global
