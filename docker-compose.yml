@@ -4,3 +4,32 @@
     build:
       context: .
       dockerfile: EasyPeasy.API/Dockerfile
+    ports:
+      - "8085:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=easypeasy.db;Database=EasyPeasyDb;User=sa;Password=P@ssword!23;
+    networks:
+      - easypeasy-network
+    depends_on: 
+      - easypeasy.db
+
+  easypeasy.db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "P@ssword!23"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    networks:
+      - easypeasy-network
+        
+volumes:
+  sqlserverdata:
+      driver: local
+
+networks:
+  easypeasy-network:
+      driver: bridge
