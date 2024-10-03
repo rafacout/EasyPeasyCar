@@ -54,4 +54,15 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+#if DEBUG
+//ApplyMigrations(app);
+#endif
+
 app.Run();
+
+void ApplyMigrations(IHost app)
+{
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<EasyPeasyDbContext>();
+    dbContext.Database.Migrate();
+}

@@ -50,12 +50,13 @@ Easy Peasy Car is a project designed to simplify the Car's rental and management
 * .Net 8 and C# 12
 * Asp.Net Core 8
 * MediatR
+* CQRS
 * Entity Framework Core 8
 * AutoMapper 
-* Azure SQL Server Database
+* SQL Server Database
 * Swagger
 * Open Api Specification 3.0.1 (OAS)
-* CQRS
+
 
 
 ### Design Patterns

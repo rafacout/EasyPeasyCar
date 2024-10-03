@@ -8,5 +8,5 @@ public class DeleteCategoryCommand : IRequest<Unit>
     {
         Id = id;
     }
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
 }

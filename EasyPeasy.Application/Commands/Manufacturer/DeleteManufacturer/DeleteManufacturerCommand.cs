@@ -9,5 +9,5 @@ public class DeleteManufacturerCommand : IRequest<Guid>
         Id = id;
     }
     
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
 }
