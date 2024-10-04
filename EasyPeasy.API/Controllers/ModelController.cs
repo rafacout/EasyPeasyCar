@@ -3,10 +3,12 @@ using EasyPeasy.Application.Commands.Model.DeleteModel;
 using EasyPeasy.Application.Commands.Model.UpdateModel;
 using EasyPeasy.Application.Queries.Model.GetAllModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyPeasy.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 public class ModelController : ControllerBase
 {

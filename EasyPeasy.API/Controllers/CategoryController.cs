@@ -3,10 +3,12 @@ using EasyPeasy.Application.Commands.Category.DeleteCategory;
 using EasyPeasy.Application.Commands.Category.UpdateCategory;
 using EasyPeasy.Application.Queries.Category.GetAllCategories;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyPeasy.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 public class CategoryController : ControllerBase
 {

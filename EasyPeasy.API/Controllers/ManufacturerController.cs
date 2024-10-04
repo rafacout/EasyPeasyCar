@@ -3,10 +3,12 @@ using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 using EasyPeasy.Application.Queries.Manufacturer.GetAllManufacturers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyPeasy.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 public class ManufacturerController : ControllerBase
 {
