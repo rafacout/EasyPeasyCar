@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using EasyPeasy.Domain.Auth;
 using Microsoft.Extensions.Configuration;
@@ -41,5 +42,17 @@ public class AuthService : IAuthService
         var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
         
         return jwtToken;
+    }
+
+    public string ComputeSha256Hash(string requestPassword)
+    {
+        using var sha256 = SHA256.Create();
+        var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(requestPassword));
+        var builder = new StringBuilder();
+        foreach (var b in bytes)
+        {
+            builder.Append(b.ToString("x2"));
+        }
+        return builder.ToString();
     }
 }

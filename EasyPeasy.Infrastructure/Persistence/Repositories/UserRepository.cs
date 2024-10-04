@@ -44,8 +44,8 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.ToListAsync();
     }
 
-    public Task<User?> GetByEmailAndPasswordAsync(string email, string hashPassword)
+    public async Task<User?> GetByEmailAndPasswordAsync(string requestEmail, string requestPassword)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == requestEmail && u.Password == requestPassword);
     }
 }

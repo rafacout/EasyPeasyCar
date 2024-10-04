@@ -12,19 +12,15 @@ Easy Peasy Car is a project designed to simplify the Car's rental and management
 
 ---
 ### TODOs
-* Buy a domain
-* Add docker containers
+
 * Payment platform (Stripe os Asaas)
 * Split in Microservices
-* Authentication and Authorization with JWT
-* Unit Tests with xUnit
-  * Moq, Bogus
 * RabbitMQ or Azure BUS
 * API Gateway with Ocelot
 * Service Discovery with Consul
 * Terraform for infra
 * CI/CD with Azure DevOPS
-* APP Services
+* Azure APP Services
 * Azure Container Instances (AKS)
 * Azure API Management
 * Azure Service Bus
@@ -38,9 +34,14 @@ Easy Peasy Car is a project designed to simplify the Car's rental and management
 * DataDog
 
 ### Doing
-* CRUD for Category
-  * Manufacturer, Rent, Store, User, Vehicle
+* CRUDs:
+  * Category, Manufacturer, Model, Rent, Store, User, Vehicle
+* Authentication and Authorization with JWT
+* Unit Tests with xUnit
+* Moq, Bogus
 
+### Done
+* Add docker containers
 
 ### Techs used 🤖
 * JetBrains Rider
