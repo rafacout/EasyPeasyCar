@@ -1,11 +1,33 @@
-﻿using MediatR;
+﻿using EasyPeasy.Domain.Enum;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.UpdateRent;
 
-class UpdateRentCommandHandler : IRequestHandler<UpdateRentCommand, Unit>
+public class UpdateRentCommandHandler : IRequestHandler<UpdateRentCommand, Unit>
 {
-    public Task<Unit> Handle(UpdateRentCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public UpdateRentCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Unit> Handle(UpdateRentCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var rent = await _unitOfWork.Rents.GetByIdAsync(request.Id);
+
+        if (rent != null)
+        {
+            rent.Update(request.UserId, request.StorePickUpId, request.StoreDropOffId, request.VehicleId,
+                request.CategoryId, (StatusRent)Enum.Parse(typeof(StatusRent), request.Status), request.StartDate,
+                request.ExpectedDate, request.ReturnedDate, request.Total);
+            await _unitOfWork.Rents.UpdateAsync(rent);
+            await _unitOfWork.CommitAsync();
+        }
+
+        return Unit.Value;
     }
 }

@@ -1,6 +1,9 @@
 ﻿using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
+using EasyPeasy.Application.Commands.User.CreateUser;
+using EasyPeasy.Application.Commands.User.DeleteUser;
+using EasyPeasy.Application.Commands.User.UpdateUser;
 using EasyPeasy.Application.Queries.User.GetAllUsers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -30,8 +33,9 @@ public class UserController : ControllerBase
         return Ok(categories);
     }
 
+    [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]CreateManufacturerCommand command)
+    public async Task<IActionResult> Create([FromBody]CreateUserCommand command)
     {
         var result = await _mediator.Send(command);
 
@@ -39,7 +43,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateManufacturerCommand command)
+    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateUserCommand command)
     {
         await _mediator.Send(command);
             
@@ -49,7 +53,7 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var command = new DeleteManufacturerCommand(id);
+        var command = new DeleteUserCommand(id);
         await _mediator.Send(command);
         return NoContent();
     }

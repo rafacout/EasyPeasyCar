@@ -1,11 +1,29 @@
-﻿using MediatR;
+﻿using EasyPeasy.Domain.Enum;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
 
-class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand, Guid>
+public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand, Guid>
 {
-    public Task<Guid> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateVehicleCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Guid> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var vehicle = new Domain.Entities.Vehicle(request.DocumentId, request.Name, request.ModelId, request.DailyRate,
+            request.Mileage, request.LicensePlate, request.Color,
+            (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
+
+        await _unitOfWork.Vehicles.CreateAsync(vehicle);
+        await _unitOfWork.CommitAsync();
+
+        return vehicle.Id;
     }
 }

@@ -1,11 +1,29 @@
-﻿using MediatR;
+﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Model.DeleteModel;
 
 public class DeleteModelCommandHandler : IRequestHandler<DeleteModelCommand, Unit>
 {
-    public Task<Unit> Handle(DeleteModelCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeleteModelCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Unit> Handle(DeleteModelCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        
+        var model = await _unitOfWork.Models.GetByIdAsync(request.Id);
+        
+        if (model != null)
+        {
+            await _unitOfWork.Models.DeleteAsync(request.Id);
+            await _unitOfWork.CommitAsync();    
+        }
+
+        return Unit.Value;
     }
 }

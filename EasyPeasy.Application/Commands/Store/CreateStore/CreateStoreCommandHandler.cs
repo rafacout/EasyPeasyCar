@@ -1,11 +1,26 @@
-﻿using MediatR;
+﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.CreateStore;
 
-public class CreateStoreCommandHandler : IRequestHandler<CreateStoreCommand, int>
+public class CreateStoreCommandHandler : IRequestHandler<CreateStoreCommand, Guid>
 {
-    public Task<int> Handle(CreateStoreCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateStoreCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Guid> Handle(CreateStoreCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request, nameof(request));
+
+        var store = new Domain.Entities.Store(request.Name, request.Address, request.City, request.State, request.Zip, request.Phone, request.Email);
+
+        await _unitOfWork.Stores.CreateAsync(store);
+        await _unitOfWork.CommitAsync();
+
+        return store.Id;
     }
 }

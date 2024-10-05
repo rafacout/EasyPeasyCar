@@ -19,9 +19,9 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login()
+    public async Task<IActionResult> Login(GetLoginQuery login)
     {
-        var user = await _mediator.Send(new GetLoginQuery());
+        var user = await _mediator.Send(login);
         
         if (user == null)
         {

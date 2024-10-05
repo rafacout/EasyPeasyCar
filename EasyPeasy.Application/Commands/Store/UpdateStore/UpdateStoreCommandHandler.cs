@@ -1,11 +1,30 @@
-﻿using MediatR;
+﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.UpdateStore;
 
-class UpdateStoreCommandHandler : IRequestHandler<UpdateStoreCommand, Unit>
+public class UpdateStoreCommandHandler : IRequestHandler<UpdateStoreCommand, Unit>
 {
-    public Task<Unit> Handle(UpdateStoreCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public UpdateStoreCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Unit> Handle(UpdateStoreCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request, nameof(request));
+        
+        var store = await _unitOfWork.Stores.GetByIdAsync(request.Id);
+
+        if (store != null)
+        {
+            store.Update(request.Name, request.Address, request.City, request.State, request.Zip, request.Phone, request.Email);
+
+            await _unitOfWork.CommitAsync();    
+        }
+
+        return Unit.Value;
     }
 }

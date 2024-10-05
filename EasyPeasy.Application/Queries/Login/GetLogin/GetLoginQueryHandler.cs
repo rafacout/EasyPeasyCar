@@ -5,18 +5,18 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Login.GetLogin;
 
-public class GetLoginQueryHandler : IRequestHandler<GetLoginQuery, LoginUserDto>
+public class GetLoginQueryHandler : IRequestHandler<GetLoginQuery, LoginUserDto?>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthService _authService;
     
-    GetLoginQueryHandler(IUnitOfWork unitOfWork, IAuthService authService)
+    public GetLoginQueryHandler(IUnitOfWork unitOfWork, IAuthService authService)
     {
         _unitOfWork = unitOfWork;
         _authService = authService;
     }
     
-    public async Task<LoginUserDto> Handle(GetLoginQuery request, CancellationToken cancellationToken)
+    public async Task<LoginUserDto?> Handle(GetLoginQuery request, CancellationToken cancellationToken)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
         
@@ -30,8 +30,13 @@ public class GetLoginQueryHandler : IRequestHandler<GetLoginQuery, LoginUserDto>
         }
         
         var token = _authService.GenerateJwt(user.Email, user.Role.ToString());
-        
-        var userViewModel = new LoginUserDto(user.Email, user.Role.ToString(), token);
+
+        var userViewModel = new LoginUserDto()
+        {
+            UserName = user.Email,
+            Role = user.Role.ToString(),
+            Token = token
+        };
 
         return userViewModel;
     }

@@ -1,11 +1,24 @@
-﻿using MediatR;
+﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 
-class DeleteManufacturerCommandHandler : IRequestHandler<DeleteManufacturerCommand, Guid>
+public class DeleteManufacturerCommandHandler : IRequestHandler<DeleteManufacturerCommand, Unit>
 {
-    public Task<Guid> Handle(DeleteManufacturerCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeleteManufacturerCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Unit> Handle(DeleteManufacturerCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        await _unitOfWork.Manufacturers.DeleteAsync(request.Id);
+        await _unitOfWork.CompleteAsync();
+        
+        return Unit.Value;
     }
 }

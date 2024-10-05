@@ -24,4 +24,15 @@ public class Model : BaseEntity
     
     public Manufacturer Manufacturer { get; private set; }
     public Category Category { get; private set; }
+
+    public void Update(string name, int year, Guid manufacturerId, Guid categoryId, TransmissionType transmission,
+        string motor)
+    {
+        Name = name;
+        Year = year;
+        ManufacturerId = manufacturerId;
+        CategoryId = categoryId;
+        Transmission = transmission;
+        Motor = motor;
+    }
 }

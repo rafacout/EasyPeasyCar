@@ -1,11 +1,29 @@
-﻿using MediatR;
+﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 
 public class UpdateManufacturerCommandHandler : IRequestHandler<UpdateManufacturerCommand, Unit>
 {
-    public Task<Unit> Handle(UpdateManufacturerCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public UpdateManufacturerCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Unit> Handle(UpdateManufacturerCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        
+        var manufacturer = await _unitOfWork.Manufacturers.GetByIdAsync(request.Id);
+        
+        if (manufacturer != null)
+        {
+            manufacturer.Update(request.Name, request.Country);
+            await _unitOfWork.CommitAsync();    
+        }
+
+        return Unit.Value;
     }
 }

@@ -14,7 +14,7 @@ public class CreateManufacturerCommandHandler : IRequestHandler<CreateManufactur
 
     public async Task<Guid> Handle(CreateManufacturerCommand request, CancellationToken cancellationToken)
     {
-        if (request == null) throw new ArgumentNullException(nameof(request));
+        ArgumentNullException.ThrowIfNull(request);
 
         var entity = new Domain.Entities.Category(request.Name);
         var id = await _unitOfWork.Categories.CreateAsync(entity);
