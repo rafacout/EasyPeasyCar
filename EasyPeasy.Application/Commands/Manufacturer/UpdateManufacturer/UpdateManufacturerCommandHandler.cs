@@ -21,6 +21,7 @@ public class UpdateManufacturerCommandHandler : IRequestHandler<UpdateManufactur
         if (manufacturer != null)
         {
             manufacturer.Update(request.Name, request.Country);
+            await _unitOfWork.Manufacturers.UpdateAsync(manufacturer);
             await _unitOfWork.CommitAsync();    
         }
 

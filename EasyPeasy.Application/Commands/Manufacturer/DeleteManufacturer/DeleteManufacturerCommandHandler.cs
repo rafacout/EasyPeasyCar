@@ -15,10 +15,15 @@ public class DeleteManufacturerCommandHandler : IRequestHandler<DeleteManufactur
     public async Task<Unit> Handle(DeleteManufacturerCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-
-        await _unitOfWork.Manufacturers.DeleteAsync(request.Id);
-        await _unitOfWork.CompleteAsync();
         
+        var manufacturer = await _unitOfWork.Manufacturers.GetByIdAsync(request.Id);
+        
+        if (manufacturer != null)
+        {
+            await _unitOfWork.Manufacturers.DeleteAsync(request.Id);
+            await _unitOfWork.CompleteAsync();
+        }
+
         return Unit.Value;
     }
 }

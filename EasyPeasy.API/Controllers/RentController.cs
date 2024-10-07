@@ -2,6 +2,7 @@
 using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 using EasyPeasy.Application.Queries.Rent.GetAllRents;
+using EasyPeasy.Application.Queries.Rent.GetRentById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,16 @@ public class RentController : ControllerBase
         var categories = await _mediator.Send(categoriesQuery);
 
         return Ok(categories);
+    }
+    
+    [HttpGet("id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var rentQuery = new GetRentByIdQuery(id);
+            
+        var rent = await _mediator.Send(rentQuery);
+
+        return Ok(rent);
     }
 
     [HttpPost]

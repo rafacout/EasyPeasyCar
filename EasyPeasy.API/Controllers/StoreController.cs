@@ -2,6 +2,7 @@
 using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 using EasyPeasy.Application.Queries.Store.GetAllStores;
+using EasyPeasy.Application.Queries.Store.GetStoreById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,16 @@ public class StoreController : ControllerBase
         var categories = await _mediator.Send(categoriesQuery);
 
         return Ok(categories);
+    }
+    
+    [HttpGet("id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var storeQuery = new GetStoreByIdQuery(id);
+            
+        var store = await _mediator.Send(storeQuery);
+
+        return Ok(store);
     }
 
     [HttpPost]

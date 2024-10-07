@@ -2,6 +2,7 @@
 using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 using EasyPeasy.Application.Queries.Manufacturer.GetAllManufacturers;
+using EasyPeasy.Application.Queries.Manufacturer.GetManufacturerById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +24,23 @@ public class ManufacturerController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var categoriesQuery = new GetAllManufacturersQuery();
+        var manufacturersQuery = new GetAllManufacturersQuery();
             
-        var categories = await _mediator.Send(categoriesQuery);
+        var manufacturers = await _mediator.Send(manufacturersQuery);
 
-        return Ok(categories);
+        return Ok(manufacturers);
     }
 
+    [HttpGet("id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var manufacturerQuery = new GetManufacturerByIdQuery(id);
+            
+        var manufacturer = await _mediator.Send(manufacturerQuery);
+
+        return Ok(manufacturer);
+        
+    }
     [HttpPost]
     public async Task<IActionResult> Create([FromBody]CreateManufacturerCommand command)
     {

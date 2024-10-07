@@ -2,6 +2,7 @@
 using EasyPeasy.Application.Commands.Category.DeleteCategory;
 using EasyPeasy.Application.Commands.Category.UpdateCategory;
 using EasyPeasy.Application.Queries.Category.GetAllCategories;
+using EasyPeasy.Application.Queries.Category.GetCategoryById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ public class CategoryController : ControllerBase
         _mediator = mediator;
     }
 
+    // TODO Rename all metod names to have Async???
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -30,6 +32,16 @@ public class CategoryController : ControllerBase
         return Ok(categories);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var categoryQuery = new GetCategoryByIdQuery(id);
+            
+        var category = await _mediator.Send(categoryQuery);
+
+        return Ok(category);
+    }
+    
     [HttpPost]
     public async Task<IActionResult> Create([FromBody]CreateCategoryCommand command)
     {

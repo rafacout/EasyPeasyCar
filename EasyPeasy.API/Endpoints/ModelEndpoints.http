@@ -1,0 +1,40 @@
+﻿### Create Model
+POST {{host}}/api/Model
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Model Test Http"
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("category_id", response.body);
+%}
+
+
+### Get All Categories
+GET {{host}}/api/Model
+Authorization: Bearer {{auth_token}}
+
+
+### Get Model by Id
+GET {{host}}/api/Model/{{category_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Model 
+PUT {{host}}/api/Model/{{category_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{category_id}}",
+  "name": "Model Test Updated Http"
+}
+
+### Delete Model by Id
+DELETE {{host}}/api/Model/{{category_id}}
+Authorization: Bearer {{auth_token}}
+
+

@@ -1,11 +1,29 @@
-﻿using MediatR;
+﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.DeleteStore;
 
 public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, Unit>
 {
-    public Task<Unit> Handle(DeleteStoreCommand request, CancellationToken cancellationToken)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeleteStoreCommandHandler(IUnitOfWork unitOfWork)
     {
-        throw new NotImplementedException();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Unit> Handle(DeleteStoreCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request, nameof(request));
+        
+        var store = await _unitOfWork.Stores.GetByIdAsync(request.Id);
+        
+        if (store != null)
+        {
+            await _unitOfWork.Stores.DeleteAsync(request.Id);
+            await _unitOfWork.CommitAsync();
+        }
+        
+        return Unit.Value;
     }
 }

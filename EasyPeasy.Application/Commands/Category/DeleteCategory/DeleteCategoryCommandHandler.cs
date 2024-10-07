@@ -16,10 +16,15 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
     public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-
-        await _unitOfWork.Categories.DeleteAsync(request.Id);
-        await _unitOfWork.CompleteAsync();
-
+        
+        var category = await _unitOfWork.Categories.GetByIdAsync(request.Id);
+        
+        if (category != null)
+        {
+            await _unitOfWork.Categories.DeleteAsync(request.Id);
+            await _unitOfWork.CompleteAsync();
+        }
+        
         return Unit.Value;
     }
 }

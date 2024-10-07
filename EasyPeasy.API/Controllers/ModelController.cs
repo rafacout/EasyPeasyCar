@@ -2,6 +2,7 @@
 using EasyPeasy.Application.Commands.Model.DeleteModel;
 using EasyPeasy.Application.Commands.Model.UpdateModel;
 using EasyPeasy.Application.Queries.Model.GetAllModels;
+using EasyPeasy.Application.Queries.Model.GetModelById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,16 @@ public class ModelController : ControllerBase
         var categories = await _mediator.Send(categoriesQuery);
 
         return Ok(categories);
+    }
+    
+    [HttpGet("id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var modelQuery = new GetModelByIdQuery(id);
+            
+        var model = await _mediator.Send(modelQuery);
+
+        return Ok(model);
     }
 
     [HttpPost]

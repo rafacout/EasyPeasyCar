@@ -2,6 +2,7 @@
 using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 using EasyPeasy.Application.Queries.Vehicle.GetAllVehicles;
+using EasyPeasy.Application.Queries.Vehicle.GetVehicleById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,16 @@ public class VehicleController : ControllerBase
         var categories = await _mediator.Send(categoriesQuery);
 
         return Ok(categories);
+    }
+    
+    [HttpGet("id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var vehicleQuery = new GetVehicleByIdQuery(id);
+            
+        var vehicle = await _mediator.Send(vehicleQuery);
+
+        return Ok(vehicle);
     }
 
     [HttpPost]

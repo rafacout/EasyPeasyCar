@@ -23,6 +23,7 @@ public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand, Uni
         {
             model.Update(request.Name, request.Year, request.ManufacturerId, request.CategoryId,
                 (TransmissionType)Enum.Parse(typeof(TransmissionType), request.Transmission), request.Motor);
+            await _unitOfWork.Models.UpdateAsync(model);
             await _unitOfWork.CommitAsync();
         }
 

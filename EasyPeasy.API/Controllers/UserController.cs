@@ -5,6 +5,7 @@ using EasyPeasy.Application.Commands.User.CreateUser;
 using EasyPeasy.Application.Commands.User.DeleteUser;
 using EasyPeasy.Application.Commands.User.UpdateUser;
 using EasyPeasy.Application.Queries.User.GetAllUsers;
+using EasyPeasy.Application.Queries.User.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,16 @@ public class UserController : ControllerBase
         return Ok(categories);
     }
 
+    [HttpGet("id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var userQuery = new GetUserByIdQuery(id);
+            
+        var user = await _mediator.Send(userQuery);
+
+        return Ok(user);
+    }
+    
     [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody]CreateUserCommand command)

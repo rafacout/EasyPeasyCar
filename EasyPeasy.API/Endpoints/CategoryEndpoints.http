@@ -1,0 +1,40 @@
+﻿### Create Category
+POST {{host}}/api/Category
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Category Test Http"
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("category_id", response.body);
+%}
+
+
+### Get All Categories
+GET {{host}}/api/Category
+Authorization: Bearer {{auth_token}}
+
+
+### Get Category by Id
+GET {{host}}/api/Category/{{category_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Category 
+PUT {{host}}/api/Category/{{category_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{category_id}}",
+  "name": "Category Test Updated Http"
+}
+
+### Delete Category by Id
+DELETE {{host}}/api/Category/{{category_id}}
+Authorization: Bearer {{auth_token}}
+
+

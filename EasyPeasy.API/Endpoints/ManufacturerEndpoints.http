@@ -1,0 +1,42 @@
+﻿### Create Manufacturer
+POST {{host}}/api/Manufacturer
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Manufacturer Test Http",
+  "country": "USA"
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("manufacturer_id", response.body);
+%}
+
+
+### Get All Manufacturers
+GET {{host}}/api/Manufacturer
+Authorization: Bearer {{auth_token}}
+
+
+### Get Manufacturer by Id
+GET {{host}}/api/Manufacturer/{{manufacturer_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Manufacturer 
+PUT {{host}}/api/Manufacturer/{{manufacturer_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{manufacturer_id}}",
+  "name": "Manufacturer Test Updated Http",
+  "country": "Brazil"
+}
+
+### Delete Manufacturer by Id
+DELETE {{host}}/api/Manufacturer/{{manufacturer_id}}
+Authorization: Bearer {{auth_token}}
+
+

@@ -16,8 +16,8 @@ public class CreateManufacturerCommandHandler : IRequestHandler<CreateManufactur
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var entity = new Domain.Entities.Category(request.Name);
-        var id = await _unitOfWork.Categories.CreateAsync(entity);
+        var entity = new Domain.Entities.Manufacturer(request.Name, request.Country);
+        var id = await _unitOfWork.Manufacturers.CreateAsync(entity);
         await _unitOfWork.CompleteAsync();
         return id;
     }
