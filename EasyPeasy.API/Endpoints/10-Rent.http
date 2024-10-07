@@ -1,0 +1,56 @@
+﻿### Create Rent
+POST {{host}}/api/Rent
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "userId": "{{user_id}}",
+  "storePickupId": "{{store_id}}",
+  "storeDropOffId": "{{store_id}}",
+  "vehicleId": "{{vehicle_id}}",
+  "categoryId": "{{category_id}}",
+  "status": "Open",
+  "startDate": "2024-10-07",
+  "expectedDate": "2024-10-20",
+  "total": 325.33
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("rent_id", response.body);
+%}
+
+
+### Get All Rents
+GET {{host}}/api/Rent
+Authorization: Bearer {{auth_token}}
+
+
+### Get Rent by Id
+GET {{host}}/api/Rent/{{rent_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Rent 
+PUT {{host}}/api/Rent/{{rent_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{rent_id}}",
+  "userId": "{{user_id}}",
+  "storePickupId": "{{store_id}}",
+  "storeDropOffId": "{{store_id}}",
+  "vehicleId": "{{vehicle_id}}",
+  "categoryId": "{{category_id}}",
+  "status": "Closed",
+  "startDate": "2024-09-08",
+  "expectedDate": "2024-09-12",
+  "total": 457.12
+}
+
+### Delete Rent by Id
+#DELETE {{host}}/api/Rent/{{rent_id}}
+#Authorization: Bearer {{auth_token}}
+
+

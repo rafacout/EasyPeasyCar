@@ -1,6 +1,6 @@
-﻿using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
+﻿using EasyPeasy.Application.Commands.Store.CreateStore;
+using EasyPeasy.Application.Commands.Store.DeleteStore;
+using EasyPeasy.Application.Commands.Store.UpdateStore;
 using EasyPeasy.Application.Queries.Store.GetAllStores;
 using EasyPeasy.Application.Queries.Store.GetStoreById;
 using MediatR;
@@ -31,7 +31,7 @@ public class StoreController : ControllerBase
         return Ok(categories);
     }
     
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var storeQuery = new GetStoreByIdQuery(id);
@@ -42,7 +42,7 @@ public class StoreController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]CreateManufacturerCommand command)
+    public async Task<IActionResult> Create([FromBody]CreateStoreCommand command)
     {
         var result = await _mediator.Send(command);
 
@@ -50,7 +50,7 @@ public class StoreController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateManufacturerCommand command)
+    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateStoreCommand command)
     {
         await _mediator.Send(command);
             
@@ -60,7 +60,7 @@ public class StoreController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var command = new DeleteManufacturerCommand(id);
+        var command = new DeleteStoreCommand(id);
         await _mediator.Send(command);
         return NoContent();
     }

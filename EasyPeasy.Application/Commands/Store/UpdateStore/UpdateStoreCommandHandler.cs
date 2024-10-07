@@ -24,7 +24,7 @@ public class UpdateStoreCommandHandler : IRequestHandler<UpdateStoreCommand, Uni
 
             await _unitOfWork.Stores.UpdateAsync(store);
             
-            await _unitOfWork.CommitAsync();    
+            await _unitOfWork.CompleteAsync();    
         }
 
         return Unit.Value;

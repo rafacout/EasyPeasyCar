@@ -22,7 +22,7 @@ public class CreateRentCommandHandler : IRequestHandler<CreateRentCommand, Guid>
             request.StartDate, request.ExpectedDate, request.ReturnedDate, request.Total);
 
         await _unitOfWork.Rents.CreateAsync(rent);
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CompleteAsync();
 
         return rent.Id;
     }

@@ -21,7 +21,7 @@ public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, Uni
         if (store != null)
         {
             await _unitOfWork.Stores.DeleteAsync(request.Id);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
         }
         
         return Unit.Value;

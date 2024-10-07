@@ -21,7 +21,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
         if (user != null)
         {
             await _unitOfWork.Users.DeleteAsync(request.Id);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
     
         }
         return Unit.Value;

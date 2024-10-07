@@ -1,6 +1,6 @@
-﻿using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
+﻿using EasyPeasy.Application.Commands.Rent.CreateRent;
+using EasyPeasy.Application.Commands.Rent.DeleteRent;
+using EasyPeasy.Application.Commands.Rent.UpdateRent;
 using EasyPeasy.Application.Queries.Rent.GetAllRents;
 using EasyPeasy.Application.Queries.Rent.GetRentById;
 using MediatR;
@@ -31,7 +31,7 @@ public class RentController : ControllerBase
         return Ok(categories);
     }
     
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var rentQuery = new GetRentByIdQuery(id);
@@ -42,7 +42,7 @@ public class RentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]CreateManufacturerCommand command)
+    public async Task<IActionResult> Create([FromBody]CreateRentCommand command)
     {
         var result = await _mediator.Send(command);
 
@@ -50,7 +50,7 @@ public class RentController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateManufacturerCommand command)
+    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateRentCommand command)
     {
         await _mediator.Send(command);
             
@@ -60,7 +60,7 @@ public class RentController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var command = new DeleteManufacturerCommand(id);
+        var command = new DeleteRentCommand(id);
         await _mediator.Send(command);
         return NoContent();
     }

@@ -22,7 +22,7 @@ public class DeleteRentCommandHandler : IRequestHandler<DeleteRentCommand, Unit>
         if (rent != null)
         {
             await _unitOfWork.Rents.DeleteAsync(request.Id);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
         }
 
         return Unit.Value;

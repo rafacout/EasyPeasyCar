@@ -22,7 +22,7 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
             (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
 
         await _unitOfWork.Vehicles.CreateAsync(vehicle);
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CompleteAsync();
 
         return vehicle.Id;
     }

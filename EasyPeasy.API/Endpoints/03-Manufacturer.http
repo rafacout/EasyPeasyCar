@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ### Delete Manufacturer by Id
-DELETE {{host}}/api/Manufacturer/{{manufacturer_id}}
-Authorization: Bearer {{auth_token}}
+#DELETE {{host}}/api/Manufacturer/{{manufacturer_id}}
+#Authorization: Bearer {{auth_token}}
 
 

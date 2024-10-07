@@ -21,7 +21,7 @@ public class CreateModelCommandHandler : IRequestHandler<CreateModelCommand, Gui
             (TransmissionType)Enum.Parse(typeof(TransmissionType), request.Transmission), request.Motor);
 
         await _unitOfWork.Models.CreateAsync(model);
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CompleteAsync();
 
         return model.Id;
     }

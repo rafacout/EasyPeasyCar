@@ -27,7 +27,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
 
             await _unitOfWork.Users.UpdateAsync(user);
             
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
         }
 
         return Unit.Value;

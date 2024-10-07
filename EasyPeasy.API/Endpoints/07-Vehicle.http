@@ -1,0 +1,54 @@
+﻿### Create Vehicle
+POST {{host}}/api/Vehicle
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "documentId": "12345678912",
+  "name": "HB20",
+  "dailyRate": 100.00,
+  "mileage": 1000,
+  "licensePlate": "ABC-1234",
+  "color": "Black",
+  "statusVehicle": "Available",  
+  "modelId": "{{model_id}}"
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("vehicle_id", response.body);
+%}
+
+
+### Get All Vehicles
+GET {{host}}/api/Vehicle
+Authorization: Bearer {{auth_token}}
+
+
+### Get Vehicle by Id
+GET {{host}}/api/Vehicle/{{vehicle_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Vehicle 
+PUT {{host}}/api/Vehicle/{{vehicle_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{vehicle_id}}",
+  "documentId": "98765432",
+  "name": "HB21",
+  "dailyRate": 115.80,
+  "mileage": 1250,
+  "licensePlate": "FEF-9856",
+  "color": "White",
+  "statusVehicle": "Rented",  
+  "modelId": "{{model_id}}"
+}
+
+### Delete Vehicle by Id
+#DELETE {{host}}/api/Vehicle/{{vehicle_id}}
+#Authorization: Bearer {{auth_token}}
+
+

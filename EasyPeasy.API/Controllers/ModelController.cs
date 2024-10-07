@@ -31,7 +31,7 @@ public class ModelController : ControllerBase
         return Ok(categories);
     }
     
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var modelQuery = new GetModelByIdQuery(id);

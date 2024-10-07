@@ -1,6 +1,6 @@
-﻿using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
+﻿using EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
+using EasyPeasy.Application.Commands.Vehicle.DeleteVehicle;
+using EasyPeasy.Application.Commands.Vehicle.UpdateVehicle;
 using EasyPeasy.Application.Queries.Vehicle.GetAllVehicles;
 using EasyPeasy.Application.Queries.Vehicle.GetVehicleById;
 using MediatR;
@@ -31,7 +31,7 @@ public class VehicleController : ControllerBase
         return Ok(categories);
     }
     
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var vehicleQuery = new GetVehicleByIdQuery(id);
@@ -42,7 +42,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]CreateManufacturerCommand command)
+    public async Task<IActionResult> Create([FromBody]CreateVehicleCommand command)
     {
         var result = await _mediator.Send(command);
 
@@ -50,7 +50,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateManufacturerCommand command)
+    public async Task<IActionResult> Update(Guid id, [FromBody]UpdateVehicleCommand command)
     {
         await _mediator.Send(command);
             
@@ -60,7 +60,7 @@ public class VehicleController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var command = new DeleteManufacturerCommand(id);
+        var command = new DeleteVehicleCommand(id);
         await _mediator.Send(command);
         return NoContent();
     }

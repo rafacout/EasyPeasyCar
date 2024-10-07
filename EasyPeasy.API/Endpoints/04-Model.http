@@ -1,0 +1,50 @@
+﻿### Create Model
+POST {{host}}/api/Model
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Model Test Http",
+  "year": 2024,
+  "manufacturerId": "{{manufacturer_id}}",
+  "categoryId": "{{category_id}}",
+  "transmission": "Automatic",
+  "motor": "V8"  
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("model_id", response.body);
+%}
+
+
+### Get All Models
+GET {{host}}/api/Model
+Authorization: Bearer {{auth_token}}
+
+
+### Get Model by Id
+GET {{host}}/api/Model/{{model_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Model 
+PUT {{host}}/api/Model/{{model_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{model_id}}",
+  "name": "Model Test Http Updated",
+  "year": 2025,
+  "manufacturerId": "98b20b69-2010-477e-e4d2-08dce6c11999",
+  "categoryId": "efee7a65-7544-4410-81aa-08dce2e3a82f",
+  "transmission": "Manual",
+  "motor": "1.0"  
+}
+
+### Delete Model by Id
+#DELETE {{host}}/api/Model/{{model_id}}
+#Authorization: Bearer {{auth_token}}
+
+

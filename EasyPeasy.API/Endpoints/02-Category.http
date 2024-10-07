@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ### Delete Category by Id
-DELETE {{host}}/api/Category/{{category_id}}
-Authorization: Bearer {{auth_token}}
+#DELETE {{host}}/api/Category/{{category_id}}
+#Authorization: Bearer {{auth_token}}
 
 

@@ -4,7 +4,7 @@ namespace EasyPeasy.Application.Commands.Vehicle.UpdateVehicle;
 
 public class UpdateVehicleCommand : IRequest<Unit>
 {
-    public Guid Id;
+    public Guid Id { get; set; }
     public string DocumentId { get; set; }
     public string Name { get; set; }
     public Guid ModelId { get; set; }

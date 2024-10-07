@@ -34,7 +34,7 @@ public class UserController : ControllerBase
         return Ok(categories);
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var userQuery = new GetUserByIdQuery(id);

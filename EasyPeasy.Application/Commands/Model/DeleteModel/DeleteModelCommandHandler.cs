@@ -21,7 +21,7 @@ public class DeleteModelCommandHandler : IRequestHandler<DeleteModelCommand, Uni
         if (model != null)
         {
             await _unitOfWork.Models.DeleteAsync(request.Id);
-            await _unitOfWork.CommitAsync();    
+            await _unitOfWork.CompleteAsync();    
         }
 
         return Unit.Value;

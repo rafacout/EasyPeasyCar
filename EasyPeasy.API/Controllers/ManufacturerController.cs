@@ -31,7 +31,7 @@ public class ManufacturerController : ControllerBase
         return Ok(manufacturers);
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var manufacturerQuery = new GetManufacturerByIdQuery(id);

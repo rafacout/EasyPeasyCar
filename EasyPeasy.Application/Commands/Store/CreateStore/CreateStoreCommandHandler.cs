@@ -19,7 +19,7 @@ public class CreateStoreCommandHandler : IRequestHandler<CreateStoreCommand, Gui
         var store = new Domain.Entities.Store(request.Name, request.Address, request.City, request.State, request.Zip, request.Phone, request.Email);
 
         await _unitOfWork.Stores.CreateAsync(store);
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CompleteAsync();
 
         return store.Id;
     }

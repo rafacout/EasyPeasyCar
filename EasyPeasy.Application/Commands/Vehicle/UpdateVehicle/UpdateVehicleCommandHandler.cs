@@ -26,7 +26,7 @@ public class UpdateVehicleCommandHandler : IRequestHandler<UpdateVehicleCommand,
                 (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
 
             await _unitOfWork.Vehicles.UpdateAsync(vehicle);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
         }
 
         return Unit.Value;

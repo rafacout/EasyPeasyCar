@@ -21,7 +21,7 @@ public class DeleteVehicleCommandHandler : IRequestHandler<DeleteVehicleCommand,
         if (vehicle != null)
         {
             await _unitOfWork.Vehicles.DeleteAsync(request.Id);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
         }
 
         return Unit.Value;

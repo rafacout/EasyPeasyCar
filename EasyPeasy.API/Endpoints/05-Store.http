@@ -1,0 +1,52 @@
+﻿### Create Store
+POST {{host}}/api/Store
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Store 01 Test Http",
+  "address": "Av Reserva do Japy",
+  "city": "Jundiaí",
+  "state": "SP",
+  "zip": "13214-000",
+  "phone": "11999999999",
+  "email": "email@gmail.com"
+}
+
+> {%
+    client.log(response.body);
+    client.global.set("store_id", response.body);
+%}
+
+
+### Get All Stores
+GET {{host}}/api/Store
+Authorization: Bearer {{auth_token}}
+
+
+### Get Store by Id
+GET {{host}}/api/Store/{{store_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Update Store 
+PUT {{host}}/api/Store/{{store_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": "{{store_id}}",
+  "name": "Store 01 Test Http",
+  "address": "Av Reserva do Japy",
+  "city": "Jundiaí",
+  "state": "SP",
+  "zip": "13214-000",
+  "phone": "11999999999",
+  "email": "email@gmail.com"
+}
+
+### Delete Store by Id
+#DELETE {{host}}/api/Store/{{store_id}}
+#Authorization: Bearer {{auth_token}}
+
+

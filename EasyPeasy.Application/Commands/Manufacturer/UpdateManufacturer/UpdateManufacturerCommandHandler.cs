@@ -22,7 +22,7 @@ public class UpdateManufacturerCommandHandler : IRequestHandler<UpdateManufactur
         {
             manufacturer.Update(request.Name, request.Country);
             await _unitOfWork.Manufacturers.UpdateAsync(manufacturer);
-            await _unitOfWork.CommitAsync();    
+            await _unitOfWork.CompleteAsync();    
         }
 
         return Unit.Value;
