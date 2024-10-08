@@ -1,4 +1,5 @@
 using System.Text;
+using Asp.Versioning;
 using EasyPeasy.Application.Auth;
 using EasyPeasy.Application.Mapping;
 using EasyPeasy.Application.Queries.Category.GetAllCategories;
@@ -15,7 +16,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Add API versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

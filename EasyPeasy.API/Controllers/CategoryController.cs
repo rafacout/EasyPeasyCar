@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Commands.Category.CreateCategory;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Commands.Category.CreateCategory;
 using EasyPeasy.Application.Commands.Category.DeleteCategory;
 using EasyPeasy.Application.Commands.Category.UpdateCategory;
 using EasyPeasy.Application.Queries.Category.GetAllCategories;
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class CategoryController : ControllerBase
 {

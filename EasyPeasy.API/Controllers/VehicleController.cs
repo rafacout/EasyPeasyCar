@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
 using EasyPeasy.Application.Commands.Vehicle.DeleteVehicle;
 using EasyPeasy.Application.Commands.Vehicle.UpdateVehicle;
 using EasyPeasy.Application.Queries.Vehicle.GetAllVehicles;
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class VehicleController : ControllerBase
 {

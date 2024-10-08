@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Commands.Store.CreateStore;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Commands.Store.CreateStore;
 using EasyPeasy.Application.Commands.Store.DeleteStore;
 using EasyPeasy.Application.Commands.Store.UpdateStore;
 using EasyPeasy.Application.Queries.Store.GetAllStores;
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class StoreController : ControllerBase
 {

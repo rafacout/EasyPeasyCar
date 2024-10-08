@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Commands.Rent.CreateRent;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Commands.Rent.CreateRent;
 using EasyPeasy.Application.Commands.Rent.DeleteRent;
 using EasyPeasy.Application.Commands.Rent.UpdateRent;
 using EasyPeasy.Application.Queries.Rent.GetAllRents;
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class RentController : ControllerBase
 {

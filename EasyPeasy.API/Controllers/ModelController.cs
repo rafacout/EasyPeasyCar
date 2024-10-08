@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Commands.Model.CreateModel;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Commands.Model.CreateModel;
 using EasyPeasy.Application.Commands.Model.DeleteModel;
 using EasyPeasy.Application.Commands.Model.UpdateModel;
 using EasyPeasy.Application.Queries.Model.GetAllModels;
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class ModelController : ControllerBase
 {

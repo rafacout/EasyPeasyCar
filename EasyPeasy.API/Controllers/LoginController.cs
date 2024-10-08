@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Queries.Login.GetLogin;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Queries.Login.GetLogin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [AllowAnonymous]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class LoginController : ControllerBase
 {

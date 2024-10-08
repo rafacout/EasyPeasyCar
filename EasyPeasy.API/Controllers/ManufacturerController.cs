@@ -1,4 +1,5 @@
-﻿using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
+﻿using Asp.Versioning;
+using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 using EasyPeasy.Application.Queries.Manufacturer.GetAllManufacturers;
@@ -10,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyPeasy.API.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class ManufacturerController : ControllerBase
 {
