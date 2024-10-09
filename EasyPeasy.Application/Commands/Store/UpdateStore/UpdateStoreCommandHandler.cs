@@ -22,7 +22,7 @@ public class UpdateStoreCommandHandler : IRequestHandler<UpdateStoreCommand, Uni
         {
             store.Update(request.Name, request.Address, request.City, request.State, request.Zip, request.Phone, request.Email);
 
-            await _unitOfWork.Stores.UpdateAsync(store);
+            _unitOfWork.Stores.UpdateAsync(store);
             
             await _unitOfWork.CompleteAsync();    
         }

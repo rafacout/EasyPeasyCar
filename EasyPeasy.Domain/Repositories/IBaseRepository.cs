@@ -8,7 +8,7 @@ public interface IBaseRepository<T> where T : BaseEntity
     
     Task<Guid> CreateAsync(T entity);
     
-    Task UpdateAsync(T entity);
+    void UpdateAsync(T entity);
     
     Task DeleteAsync(Guid id);
 }

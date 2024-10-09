@@ -1,5 +1,5 @@
 ﻿### Login User
-POST {{host}}/api/Login
+POST {{host}}/api/v{{version}}/Login
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 %}
 
 ### Create User
-#POST {{host}}/api/User
+#POST {{host}}/api/v{{version}}/User
 #Content-Type: application/json
 #
 #{

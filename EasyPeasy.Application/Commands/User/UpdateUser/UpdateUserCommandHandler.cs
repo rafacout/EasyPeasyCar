@@ -25,7 +25,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
                 request.Document, request.Phone, request.Address, request.City, request.State, request.Country,
                 request.ZipCode, DateOnly.Parse(request.BirthDate));
 
-            await _unitOfWork.Users.UpdateAsync(user);
+            _unitOfWork.Users.UpdateAsync(user);
             
             await _unitOfWork.CompleteAsync();
         }

@@ -17,7 +17,7 @@ public class ManufactureRepository : IManufacturerRepository
 
     public async Task<Manufacturer?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Manufacturers.FirstOrDefaultAsync(s => s.Id == id);
+        return await _dbContext.Manufacturers.SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Guid> CreateAsync(Manufacturer entity)
@@ -26,14 +26,14 @@ public class ManufactureRepository : IManufacturerRepository
         return entity.Id;
     }
     
-    public async Task UpdateAsync(Manufacturer entity)
+    public void UpdateAsync(Manufacturer entity)
     {
         _dbContext.Manufacturers.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _dbContext.Manufacturers.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Manufacturers.SingleOrDefaultAsync(s => s.Id == id);
 
         if (entity is not null) { 
             _dbContext.Manufacturers.Remove(entity);

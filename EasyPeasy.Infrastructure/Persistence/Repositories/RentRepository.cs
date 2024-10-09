@@ -16,7 +16,7 @@ public class RentRepository : IRentRepository
 
     public async Task<Rent?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Rents.FirstOrDefaultAsync(s => s.Id == id);
+        return await _dbContext.Rents.SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Guid> CreateAsync(Rent entity)
@@ -25,14 +25,14 @@ public class RentRepository : IRentRepository
         return entity.Id;
     }
     
-    public async Task UpdateAsync(Rent entity)
+    public void UpdateAsync(Rent entity)
     {
         _dbContext.Rents.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _dbContext.Rents.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Rents.SingleOrDefaultAsync(s => s.Id == id);
 
         if (entity is not null) { 
             _dbContext.Rents.Remove(entity);

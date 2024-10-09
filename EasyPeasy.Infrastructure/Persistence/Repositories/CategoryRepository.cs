@@ -9,6 +9,7 @@ public class CategoryRepository : ICategoryRepository
 {
     private readonly EasyPeasyDbContext _dbContext;
 
+    //TODO Use composition instead of inheritance
     public CategoryRepository(EasyPeasyDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -16,7 +17,7 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Categories.FirstOrDefaultAsync(s => s.Id == id);
+        return await _dbContext.Categories.SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Guid> CreateAsync(Category entity)
@@ -25,14 +26,14 @@ public class CategoryRepository : ICategoryRepository
         return entity.Id;
     }
 
-    public async Task UpdateAsync(Category entity)
+    public void UpdateAsync(Category entity)
     {
         _dbContext.Categories.Update(entity);
     }
 
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _dbContext.Categories.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Categories.SingleOrDefaultAsync(s => s.Id == id);
 
         if (entity is not null) { 
             _dbContext.Categories.Remove(entity);

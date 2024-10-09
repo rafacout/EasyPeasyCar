@@ -16,7 +16,7 @@ public class ModelRepository : IModelRepository
 
     public async Task<Model?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Models.FirstOrDefaultAsync(s => s.Id == id);
+        return await _dbContext.Models.SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Guid> CreateAsync(Model entity)
@@ -25,14 +25,14 @@ public class ModelRepository : IModelRepository
         return entity.Id;
     }
     
-    public async Task UpdateAsync(Model entity)
+    public void UpdateAsync(Model entity)
     {
         _dbContext.Models.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _dbContext.Models.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Models.SingleOrDefaultAsync(s => s.Id == id);
 
         if (entity is not null) { 
             _dbContext.Models.Remove(entity);

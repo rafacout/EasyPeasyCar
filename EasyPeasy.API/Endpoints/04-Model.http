@@ -1,5 +1,5 @@
 ﻿### Create Model
-POST {{host}}/api/Model
+POST {{host}}/api/v{{version}}/Model
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -19,17 +19,17 @@ Content-Type: application/json
 
 
 ### Get All Models
-GET {{host}}/api/Model
+GET {{host}}/api/v{{version}}/Model
 Authorization: Bearer {{auth_token}}
 
 
 ### Get Model by Id
-GET {{host}}/api/Model/{{model_id}}
+GET {{host}}/api/v{{version}}/Model/{{model_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update Model 
-PUT {{host}}/api/Model/{{model_id}}
+PUT {{host}}/api/v{{version}}/Model/{{model_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -44,7 +44,7 @@ Content-Type: application/json
 }
 
 ### Delete Model by Id
-#DELETE {{host}}/api/Model/{{model_id}}
+#DELETE {{host}}/api/v{{version}}/Model/{{model_id}}
 #Authorization: Bearer {{auth_token}}
 
 

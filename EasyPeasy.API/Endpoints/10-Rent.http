@@ -1,5 +1,5 @@
 ﻿### Create Rent
-POST {{host}}/api/Rent
+POST {{host}}/api/v{{version}}/Rent
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -22,17 +22,17 @@ Content-Type: application/json
 
 
 ### Get All Rents
-GET {{host}}/api/Rent
+GET {{host}}/api/v{{version}}/Rent
 Authorization: Bearer {{auth_token}}
 
 
 ### Get Rent by Id
-GET {{host}}/api/Rent/{{rent_id}}
+GET {{host}}/api/v{{version}}/Rent/{{rent_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update Rent 
-PUT {{host}}/api/Rent/{{rent_id}}
+PUT {{host}}/api/v{{version}}/Rent/{{rent_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -50,7 +50,7 @@ Content-Type: application/json
 }
 
 ### Delete Rent by Id
-#DELETE {{host}}/api/Rent/{{rent_id}}
+#DELETE {{host}}/api/v{{version}}/Rent/{{rent_id}}
 #Authorization: Bearer {{auth_token}}
 
 

@@ -1,5 +1,5 @@
 ﻿### Create Manufacturer
-POST {{host}}/api/Manufacturer
+POST {{host}}/api/v{{version}}/Manufacturer
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -15,17 +15,17 @@ Content-Type: application/json
 
 
 ### Get All Manufacturers
-GET {{host}}/api/Manufacturer
+GET {{host}}/api/v{{version}}/Manufacturer
 Authorization: Bearer {{auth_token}}
 
 
 ### Get Manufacturer by Id
-GET {{host}}/api/Manufacturer/{{manufacturer_id}}
+GET {{host}}/api/v{{version}}/Manufacturer/{{manufacturer_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update Manufacturer 
-PUT {{host}}/api/Manufacturer/{{manufacturer_id}}
+PUT {{host}}/api/v{{version}}/Manufacturer/{{manufacturer_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ### Delete Manufacturer by Id
-#DELETE {{host}}/api/Manufacturer/{{manufacturer_id}}
+#DELETE {{host}}/api/v{{version}}/Manufacturer/{{manufacturer_id}}
 #Authorization: Bearer {{auth_token}}
 
 

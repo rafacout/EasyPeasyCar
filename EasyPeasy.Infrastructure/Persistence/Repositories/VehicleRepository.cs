@@ -16,7 +16,7 @@ public class VehicleRepository : IVehicleRepository
 
     public async Task<Vehicle?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Vehicles.FirstOrDefaultAsync(s => s.Id == id);
+        return await _dbContext.Vehicles.SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Guid> CreateAsync(Vehicle entity)
@@ -25,14 +25,14 @@ public class VehicleRepository : IVehicleRepository
         return entity.Id;
     }
     
-    public async Task UpdateAsync(Vehicle entity)
+    public void UpdateAsync(Vehicle entity)
     {
         _dbContext.Vehicles.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _dbContext.Vehicles.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Vehicles.SingleOrDefaultAsync(s => s.Id == id);
 
         if (entity is not null) { 
             _dbContext.Vehicles.Remove(entity);

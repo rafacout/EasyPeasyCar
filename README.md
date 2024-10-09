@@ -36,12 +36,14 @@ Easy Peasy Car is a project designed to simplify the Car's rental and management
 ### Doing
 * CRUDs:
   * Category, Manufacturer, Model, Rent, Store, User, Vehicle
-* Authentication and Authorization with JWT
 * Unit Tests with xUnit
 * Moq, Bogus
 
 ### Done
 * Add docker containers
+* Authentication and Authorization with JWT
+* Api Versioning
+
 
 ### Techs used 🤖
 * JetBrains Rider

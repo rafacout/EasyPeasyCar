@@ -25,7 +25,7 @@ public class UpdateVehicleCommandHandler : IRequestHandler<UpdateVehicleCommand,
                 request.LicensePlate, request.Color,
                 (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
 
-            await _unitOfWork.Vehicles.UpdateAsync(vehicle);
+            _unitOfWork.Vehicles.UpdateAsync(vehicle);
             await _unitOfWork.CompleteAsync();
         }
 

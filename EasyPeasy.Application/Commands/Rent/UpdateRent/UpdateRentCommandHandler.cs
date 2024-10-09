@@ -24,7 +24,7 @@ public class UpdateRentCommandHandler : IRequestHandler<UpdateRentCommand, Unit>
             rent.Update(request.UserId, request.StorePickUpId, request.StoreDropOffId, request.VehicleId,
                 request.CategoryId, (StatusRent)Enum.Parse(typeof(StatusRent), request.Status), request.StartDate,
                 request.ExpectedDate, request.ReturnedDate, request.Total);
-            await _unitOfWork.Rents.UpdateAsync(rent);
+            _unitOfWork.Rents.UpdateAsync(rent);
             await _unitOfWork.CompleteAsync();
         }
 

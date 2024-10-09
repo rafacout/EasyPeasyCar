@@ -1,5 +1,5 @@
 ﻿### Create Vehicle
-POST {{host}}/api/Vehicle
+POST {{host}}/api/v{{version}}/Vehicle
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -21,17 +21,17 @@ Content-Type: application/json
 
 
 ### Get All Vehicles
-GET {{host}}/api/Vehicle
+GET {{host}}/api/v{{version}}/Vehicle
 Authorization: Bearer {{auth_token}}
 
 
 ### Get Vehicle by Id
-GET {{host}}/api/Vehicle/{{vehicle_id}}
+GET {{host}}/api/v{{version}}/Vehicle/{{vehicle_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update Vehicle 
-PUT {{host}}/api/Vehicle/{{vehicle_id}}
+PUT {{host}}/api/v{{version}}/Vehicle/{{vehicle_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -48,7 +48,7 @@ Content-Type: application/json
 }
 
 ### Delete Vehicle by Id
-#DELETE {{host}}/api/Vehicle/{{vehicle_id}}
+#DELETE {{host}}/api/v{{version}}/Vehicle/{{vehicle_id}}
 #Authorization: Bearer {{auth_token}}
 
 

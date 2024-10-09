@@ -16,7 +16,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(s => s.Id == id);
+        return await _dbContext.Users.SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Guid> CreateAsync(User entity)
@@ -25,14 +25,14 @@ public class UserRepository : IUserRepository
         return entity.Id;
     }
     
-    public async Task UpdateAsync(User entity)
+    public void UpdateAsync(User entity)
     {
         _dbContext.Users.Update(entity);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _dbContext.Users.FirstOrDefaultAsync(s => s.Id == id);
+        var entity = await _dbContext.Users.SingleOrDefaultAsync(s => s.Id == id);
 
         if (entity is not null) { 
             _dbContext.Users.Remove(entity);
@@ -46,6 +46,6 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByEmailAndPasswordAsync(string requestEmail, string requestPassword)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == requestEmail && u.Password == requestPassword);
+        return await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == requestEmail && u.Password == requestPassword);
     }
 }

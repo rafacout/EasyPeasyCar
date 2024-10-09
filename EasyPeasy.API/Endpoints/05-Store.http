@@ -1,5 +1,5 @@
 ﻿### Create Store
-POST {{host}}/api/Store
+POST {{host}}/api/v{{version}}/Store
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -20,17 +20,17 @@ Content-Type: application/json
 
 
 ### Get All Stores
-GET {{host}}/api/Store
+GET {{host}}/api/v{{version}}/Store
 Authorization: Bearer {{auth_token}}
 
 
 ### Get Store by Id
-GET {{host}}/api/Store/{{store_id}}
+GET {{host}}/api/v{{version}}/Store/{{store_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update Store 
-PUT {{host}}/api/Store/{{store_id}}
+PUT {{host}}/api/v{{version}}/Store/{{store_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -46,7 +46,7 @@ Content-Type: application/json
 }
 
 ### Delete Store by Id
-#DELETE {{host}}/api/Store/{{store_id}}
+#DELETE {{host}}/api/v{{version}}/Store/{{store_id}}
 #Authorization: Bearer {{auth_token}}
 
 

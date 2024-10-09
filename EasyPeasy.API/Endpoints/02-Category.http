@@ -1,5 +1,5 @@
 ﻿### Create Category
-POST {{host}}/api/Category
+POST {{host}}/api/v{{version}}/Category
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -14,17 +14,17 @@ Content-Type: application/json
 
 
 ### Get All Categories
-GET {{host}}/api/Category
+GET {{host}}/api/v{{version}}/Category
 Authorization: Bearer {{auth_token}}
 
 
 ### Get Category by Id
-GET {{host}}/api/Category/{{category_id}}
+GET {{host}}/api/v{{version}}/Category/{{category_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update Category 
-PUT {{host}}/api/Category/{{category_id}}
+PUT {{host}}/api/v{{version}}/Category/{{category_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ### Delete Category by Id
-#DELETE {{host}}/api/Category/{{category_id}}
+#DELETE {{host}}/api/v{{version}}/Category/{{category_id}}
 #Authorization: Bearer {{auth_token}}
 
 

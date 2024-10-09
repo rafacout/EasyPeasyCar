@@ -1,5 +1,5 @@
 ﻿### Create User
-POST {{host}}/api/User
+POST {{host}}/api/v{{version}}/User
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -24,17 +24,17 @@ Content-Type: application/json
 
 
 ### Get All Users
-GET {{host}}/api/User
+GET {{host}}/api/v{{version}}/User
 Authorization: Bearer {{auth_token}}
 
 
 ### Get User by Id
-GET {{host}}/api/User/{{user_id}}
+GET {{host}}/api/v{{version}}/User/{{user_id}}
 Authorization: Bearer {{auth_token}}
 
 
 ### Update User 
-PUT {{host}}/api/User/{{user_id}}
+PUT {{host}}/api/v{{version}}/User/{{user_id}}
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -54,7 +54,7 @@ Content-Type: application/json
 }
 
 ### Delete User by Id
-#DELETE {{host}}/api/User/{{user_id}}
+#DELETE {{host}}/api/v{{version}}/User/{{user_id}}
 #Authorization: Bearer {{auth_token}}
 
 

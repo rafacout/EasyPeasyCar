@@ -19,10 +19,11 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         var entity = await _unitOfWork.Categories.GetByIdAsync(request.Id);
         
         // TODO Should we inform in return that the id was not found? Update/Get/Delete
+        // Padrao Result
         if (entity is not null)
         {
             entity.Update(request.Name);
-            await _unitOfWork.Categories.UpdateAsync(entity);
+            _unitOfWork.Categories.UpdateAsync(entity);
             await _unitOfWork.CompleteAsync();
         }
 
