@@ -1,30 +1,24 @@
 ﻿using System.Diagnostics;
+using EasyPeasy.Application.DTOs;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.DeleteRent;
 
-public class DeleteRentCommandHandler : IRequestHandler<DeleteRentCommand, Unit>
+public class DeleteRentCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteRentCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteRentCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(DeleteRentCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var rent = await unitOfWork.Rents.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(DeleteRentCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request, nameof(request));
-        
-        var rent = await _unitOfWork.Rents.GetByIdAsync(request.Id);
-
-        if (rent != null)
+        if (rent == null)
         {
-            await _unitOfWork.Rents.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Rent not found");
         }
 
-        return Unit.Value;
+        await unitOfWork.Rents.DeleteAsync(request.Id);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Rent deleted successfully");
     }
 }

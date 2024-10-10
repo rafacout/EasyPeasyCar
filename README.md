@@ -66,3 +66,4 @@ Easy Peasy Car is a project designed to simplify the Car's rental and management
 * Unit of Work
 * Repository
 * Mediator (MediatR)
+* Result Pattern

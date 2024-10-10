@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.User.UpdateUser;
 
-public class UpdateUserCommand : IRequest<Unit>
+public class UpdateUserCommand : IRequest<ResultDto<Guid>>
 {
     public Guid Id { get; set; }
     public string Email { get;  set; }

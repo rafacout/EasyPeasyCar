@@ -1,34 +1,29 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Domain.Enum;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Vehicle.UpdateVehicle;
 
-public class UpdateVehicleCommandHandler : IRequestHandler<UpdateVehicleCommand, Unit>
+public class UpdateVehicleCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<UpdateVehicleCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateVehicleCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(UpdateVehicleCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var vehicle = await unitOfWork.Vehicles.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(UpdateVehicleCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var vehicle = await _unitOfWork.Vehicles.GetByIdAsync(request.Id);
-
-        if (vehicle != null)
+        if (vehicle == null)
         {
-            vehicle.Update(request.DocumentId, request.Name, request.ModelId, request.DailyRate, request.Mileage,
-                request.LicensePlate, request.Color,
-                (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
-
-            _unitOfWork.Vehicles.UpdateAsync(vehicle);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Vehicle not found");
         }
 
-        return Unit.Value;
+        vehicle.Update(request.DocumentId, request.Name, request.ModelId, request.DailyRate, request.Mileage,
+            request.LicensePlate, request.Color,
+            (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
+
+        unitOfWork.Vehicles.UpdateAsync(vehicle);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Vehicle updated successfully");
     }
 }

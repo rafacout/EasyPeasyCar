@@ -1,30 +1,25 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
 
-public class UpdateManufacturerCommandHandler : IRequestHandler<UpdateManufacturerCommand, Unit>
+public class UpdateManufacturerCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<UpdateManufacturerCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateManufacturerCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(UpdateManufacturerCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var manufacturer = await unitOfWork.Manufacturers.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(UpdateManufacturerCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-        
-        var manufacturer = await _unitOfWork.Manufacturers.GetByIdAsync(request.Id);
-        
-        if (manufacturer != null)
+        if (manufacturer == null)
         {
-            manufacturer.Update(request.Name, request.Country);
-            _unitOfWork.Manufacturers.UpdateAsync(manufacturer);
-            await _unitOfWork.CompleteAsync();    
+            return ResultDto<Guid>.Failure("Manufacturer not found");
         }
 
-        return Unit.Value;
+        manufacturer.Update(request.Name, request.Country);
+        unitOfWork.Manufacturers.UpdateAsync(manufacturer);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Manufacturer updated successfully");
     }
 }

@@ -1,29 +1,22 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Domain.Enum;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
 
-public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand, Guid>
+public class CreateVehicleCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<CreateVehicleCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CreateVehicleCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
-
-    public async Task<Guid> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
         var vehicle = new Domain.Entities.Vehicle(request.DocumentId, request.Name, request.ModelId, request.DailyRate,
             request.Mileage, request.LicensePlate, request.Color,
             (StatusVehicle)Enum.Parse(typeof(StatusVehicle), request.StatusVehicle));
 
-        await _unitOfWork.Vehicles.CreateAsync(vehicle);
-        await _unitOfWork.CompleteAsync();
+        await unitOfWork.Vehicles.CreateAsync(vehicle);
+        await unitOfWork.CompleteAsync();
 
-        return vehicle.Id;
+        return ResultDto<Guid>.Success(vehicle.Id, "Vehicle created successfully");
     }
 }

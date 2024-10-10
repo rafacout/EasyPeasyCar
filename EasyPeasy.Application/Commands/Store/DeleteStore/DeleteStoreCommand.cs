@@ -1,12 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.DeleteStore;
 
-public class DeleteStoreCommand : IRequest<Unit>
+public class DeleteStoreCommand(Guid id) : IRequest<ResultDto<Guid>>
 {
-    public DeleteStoreCommand(Guid id)
-    {
-        Id = id;
-    }
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

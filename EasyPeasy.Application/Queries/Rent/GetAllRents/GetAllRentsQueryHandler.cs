@@ -5,20 +5,15 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Rent.GetAllRents;
 
-public class GetAllRentsQueryHandler : IRequestHandler<GetAllRentsQuery, List<RentDto>>
+public class GetAllRentsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetAllRentsQuery, ResultDto<List<RentDto>>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetAllRentsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<List<RentDto>>> Handle(GetAllRentsQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+        var rents = await unitOfWork.Rents.GetAllAsync();
 
-    public async Task<List<RentDto>> Handle(GetAllRentsQuery request, CancellationToken cancellationToken)
-    {
-        var rents = await _unitOfWork.Rents.GetAllAsync();
-        return _mapper.Map<List<RentDto>>(rents);
+        var rentDtos = mapper.Map<List<RentDto>>(rents);
+        
+        return ResultDto<List<RentDto>>.Success(rentDtos);
     }
 }

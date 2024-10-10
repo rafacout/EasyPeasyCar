@@ -3,12 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Category.GetCategoryById;
 
-public class GetCategoryByIdQuery : IRequest<CategoryDto>
+public class GetCategoryByIdQuery(Guid id) : IRequest<ResultDto<CategoryDto>>
 {
-    public GetCategoryByIdQuery(Guid id)
-    {
-        Id = id;
-    }
-    
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

@@ -24,6 +24,7 @@ public class CategoryController : ControllerBase
     }
 
     // TODO Rename all metod names to have Async???
+    // TODO Fix all warnings
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {

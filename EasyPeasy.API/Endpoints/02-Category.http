@@ -9,7 +9,7 @@ Content-Type: application/json
 
 > {%
     client.log(response.body);
-    client.global.set("category_id", response.body);
+    client.global.set("category_id", response.body.data);
 %}
 
 

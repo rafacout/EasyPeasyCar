@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.CreateRent;
 
-public class CreateRentCommand : IRequest<Guid>
+public class CreateRentCommand : IRequest<ResultDto<Guid>>
 {
     public Guid UserId { get; set; }
     public Guid StorePickUpId { get; set; }

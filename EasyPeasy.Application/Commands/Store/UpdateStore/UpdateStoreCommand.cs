@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.UpdateStore;
 
-public class UpdateStoreCommand : IRequest<Unit>
+public class UpdateStoreCommand : IRequest<ResultDto<Guid>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

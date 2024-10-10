@@ -5,23 +5,20 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Vehicle.GetVehicleById;
 
-public class GetVehicleByIdQueryHandler : IRequestHandler<GetVehicleByIdQuery, VehicleDto>
+public class GetVehicleByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetVehicleByIdQuery, ResultDto<VehicleDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetVehicleByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<VehicleDto>> Handle(GetVehicleByIdQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+        var vehicle = await unitOfWork.Vehicles.GetByIdAsync(request.Id);
+        
+        if (vehicle == null)
+        {
+            return ResultDto<VehicleDto>.Failure($"Vehicle '{request.Id}' not exist.");
+        }
 
-    public async Task<VehicleDto> Handle(GetVehicleByIdQuery request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
+        var vehicleDto = mapper.Map<VehicleDto>(vehicle);
         
-        var vehicle = await _unitOfWork.Vehicles.GetByIdAsync(request.Id);
-        
-        return _mapper.Map<VehicleDto>(vehicle);
+        return ResultDto<VehicleDto>.Success(vehicleDto);
     }
 }

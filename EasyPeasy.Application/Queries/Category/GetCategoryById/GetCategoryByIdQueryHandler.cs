@@ -6,23 +6,20 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Category.GetCategoryById;
 
-public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryDto>
+public class GetCategoryByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetCategoryByIdQuery, ResultDto<CategoryDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetCategoryByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<CategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
-
-    public async Task<CategoryDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
+        var category = await unitOfWork.Categories.GetByIdAsync(request.Id);
         
-        var category = await _unitOfWork.Categories.GetByIdAsync(request.Id);
+        if (category == null)
+        {
+            return ResultDto<CategoryDto>.Failure($"Category '{request.Id}' not exist.");
+        }
         
-        return _mapper.Map<CategoryDto>(category);
+        var categoryDto = mapper.Map<CategoryDto>(category);
+        
+        return ResultDto<CategoryDto>.Success(categoryDto);
     }
 }

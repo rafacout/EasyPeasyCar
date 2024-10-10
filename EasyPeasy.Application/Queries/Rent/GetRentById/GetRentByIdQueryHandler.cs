@@ -5,23 +5,20 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Rent.GetRentById;
 
-public class GetRentByIdQueryHandler : IRequestHandler<GetRentByIdQuery, RentDto>
+public class GetRentByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetRentByIdQuery, ResultDto<RentDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetRentByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<RentDto>> Handle(GetRentByIdQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+        var rent = await unitOfWork.Rents.GetByIdAsync(request.Id);
+        
+        if (rent == null)
+        {
+            return ResultDto<RentDto>.Failure($"Rent '{request.Id}' not exist.");
+        }
 
-    public async Task<RentDto> Handle(GetRentByIdQuery request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
+        var rentDto = mapper.Map<RentDto>(rent);
         
-        var rent = await _unitOfWork.Rents.GetByIdAsync(request.Id);
-        
-        return _mapper.Map<RentDto>(rent);
+        return ResultDto<RentDto>.Success(rentDto);
     }
 }

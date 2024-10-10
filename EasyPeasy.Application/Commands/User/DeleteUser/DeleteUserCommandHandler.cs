@@ -1,29 +1,23 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.User.DeleteUser;
 
-public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
+public class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteUserCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteUserCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var user = await unitOfWork.Users.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-        
-        var user = await _unitOfWork.Users.GetByIdAsync(request.Id);
-
-        if (user != null)
+        if (user == null)
         {
-            await _unitOfWork.Users.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();
-    
+            return ResultDto<Guid>.Failure("User not found");
         }
-        return Unit.Value;
+
+        await unitOfWork.Users.DeleteAsync(request.Id);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "User deleted successfully");
     }
 }

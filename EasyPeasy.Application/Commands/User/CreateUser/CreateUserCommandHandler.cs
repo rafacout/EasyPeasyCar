@@ -1,4 +1,5 @@
 ﻿using EasyPeasy.Application.Auth;
+using EasyPeasy.Application.DTOs;
 using EasyPeasy.Domain.Auth;
 using EasyPeasy.Domain.Enum;
 using EasyPeasy.Domain.Repositories;
@@ -7,31 +8,21 @@ using MediatR;
 
 namespace EasyPeasy.Application.Commands.User.CreateUser;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
+public class CreateUserCommandHandler(IAuthService authService, IUnitOfWork unitOfWork)
+    : IRequestHandler<CreateUserCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IAuthService _authService;
-
-    public CreateUserCommandHandler(IAuthService authService, IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        _authService = authService;
-        _unitOfWork = unitOfWork;
-    }
-
-    public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var passwordHash = _authService.ComputeSha256Hash(request.Password);
+        var passwordHash = authService.ComputeSha256Hash(request.Password);
         
         var user = new Domain.Entities.User(request.Email, passwordHash,
             (RoleType)Enum.Parse(typeof(RoleType), request.Role), request.Document,
             request.Phone, request.Address, request.City, request.State, request.Country, request.ZipCode,
             DateOnly.Parse(request.BirthDate));
         
-        await _unitOfWork.Users.CreateAsync(user);
-        await _unitOfWork.CompleteAsync();
+        await unitOfWork.Users.CreateAsync(user);
+        await unitOfWork.CompleteAsync();
 
-        return user.Id;
+        return ResultDto<Guid>.Success(user.Id, "User created successfully");
     }
 }

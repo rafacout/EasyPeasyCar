@@ -5,6 +5,6 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Manufacturer.GetAllManufacturers;
 
-public class GetAllManufacturersQuery : IRequest<List<ManufacturerDto>>
+public class GetAllManufacturersQuery : IRequest<ResultDto<List<ManufacturerDto>>>
 {
 }

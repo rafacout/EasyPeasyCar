@@ -1,29 +1,24 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Vehicle.DeleteVehicle;
 
-public class DeleteVehicleCommandHandler : IRequestHandler<DeleteVehicleCommand, Unit>
+public class DeleteVehicleCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<DeleteVehicleCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteVehicleCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(DeleteVehicleCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var vehicle = await unitOfWork.Vehicles.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(DeleteVehicleCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var vehicle = await _unitOfWork.Vehicles.GetByIdAsync(request.Id);
-        
-        if (vehicle != null)
+        if (vehicle == null)
         {
-            await _unitOfWork.Vehicles.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Vehicle not found");
         }
 
-        return Unit.Value;
+        await unitOfWork.Vehicles.DeleteAsync(request.Id);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Vehicle deleted successfully");
     }
 }

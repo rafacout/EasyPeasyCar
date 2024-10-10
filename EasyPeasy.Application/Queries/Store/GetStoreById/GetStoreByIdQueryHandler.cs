@@ -5,23 +5,20 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Store.GetStoreById;
 
-public class GetStoreByIdQueryHandler : IRequestHandler<GetStoreByIdQuery, StoreDto>
+public class GetStoreByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetStoreByIdQuery, ResultDto<StoreDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetStoreByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<StoreDto>> Handle(GetStoreByIdQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+        var store = await unitOfWork.Stores.GetByIdAsync(request.Id);
+        
+        if (store == null)
+        {
+            return ResultDto<StoreDto>.Failure($"Store '{request.Id}' not exist.");
+        }
 
-    public async Task<StoreDto> Handle(GetStoreByIdQuery request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
+        var storeDto = mapper.Map<StoreDto>(store);
         
-        var store = await _unitOfWork.Stores.GetByIdAsync(request.Id);
-        
-        return _mapper.Map<StoreDto>(store);
+        return ResultDto<StoreDto>.Success(storeDto);
     }
 }

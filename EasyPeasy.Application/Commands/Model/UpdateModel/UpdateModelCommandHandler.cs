@@ -1,32 +1,26 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Domain.Enum;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Model.UpdateModel;
 
-public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand, Unit>
+public class UpdateModelCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateModelCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateModelCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(UpdateModelCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var model = await unitOfWork.Models.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(UpdateModelCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var model = await _unitOfWork.Models.GetByIdAsync(request.Id);
-
-        if (model != null)
+        if (model == null)
         {
-            model.Update(request.Name, request.Year, request.ManufacturerId, request.CategoryId,
-                (TransmissionType)Enum.Parse(typeof(TransmissionType), request.Transmission), request.Motor);
-            _unitOfWork.Models.UpdateAsync(model);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Model not found");
         }
 
-        return Unit.Value;
+        model.Update(request.Name, request.Year, request.ManufacturerId, request.CategoryId,
+            (TransmissionType)Enum.Parse(typeof(TransmissionType), request.Transmission), request.Motor);
+        unitOfWork.Models.UpdateAsync(model);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Model updated successfully");
     }
 }

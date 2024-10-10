@@ -3,12 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Vehicle.GetVehicleById;
 
-public class GetVehicleByIdQuery : IRequest<VehicleDto>
+public class GetVehicleByIdQuery(Guid id) : IRequest<ResultDto<VehicleDto>>
 {
-    public GetVehicleByIdQuery(Guid id)
-    {
-        Id = id;
-    }
-    
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

@@ -1,29 +1,23 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Model.DeleteModel;
 
-public class DeleteModelCommandHandler : IRequestHandler<DeleteModelCommand, Unit>
+public class DeleteModelCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteModelCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteModelCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(DeleteModelCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var model = await unitOfWork.Models.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(DeleteModelCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-        
-        var model = await _unitOfWork.Models.GetByIdAsync(request.Id);
-        
-        if (model != null)
+        if (model == null)
         {
-            await _unitOfWork.Models.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();    
+            return ResultDto<Guid>.Failure("Model not found");
         }
 
-        return Unit.Value;
+        await unitOfWork.Models.DeleteAsync(request.Id);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Model deleted successfully");
     }
 }

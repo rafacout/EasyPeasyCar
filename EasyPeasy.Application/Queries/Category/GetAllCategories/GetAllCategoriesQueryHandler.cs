@@ -5,20 +5,14 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Category.GetAllCategories;
 
-public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuery, List<CategoryDto>>
+//TODO Avoid using List<T> in the return type of the query handler. Use IEnumerable<T> instead.
+public class GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetAllCategoriesQuery, ResultDto<List<CategoryDto>>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<List<CategoryDto>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
-
-    public async Task<List<CategoryDto>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
-    {
-        var categories = await _unitOfWork.Categories.GetAllAsync();
-        return _mapper.Map<List<CategoryDto>>(categories);
+        var categories = await unitOfWork.Categories.GetAllAsync();
+        var data = mapper.Map<List<CategoryDto>>(categories);
+        return ResultDto<List<CategoryDto>>.Success(data);
     }
 }

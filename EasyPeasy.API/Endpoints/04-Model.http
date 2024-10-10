@@ -14,7 +14,7 @@ Content-Type: application/json
 
 > {%
     client.log(response.body);
-    client.global.set("model_id", response.body);
+    client.global.set("model_id", response.body.data);
 %}
 
 

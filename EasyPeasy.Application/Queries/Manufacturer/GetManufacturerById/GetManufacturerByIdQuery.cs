@@ -3,12 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Manufacturer.GetManufacturerById;
 
-public class GetManufacturerByIdQuery : IRequest<ManufacturerDto>
+public class GetManufacturerByIdQuery(Guid id) : IRequest<ResultDto<ManufacturerDto>>
 {
-    public GetManufacturerByIdQuery(Guid id)
-    {
-        Id = id;
-    }
-    
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

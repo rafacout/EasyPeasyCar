@@ -1,32 +1,25 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Category.UpdateCategory;
 
-public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Unit>
+public class UpdateCategoryCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<UpdateCategoryCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var entity = await unitOfWork.Categories.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-        
-        var entity = await _unitOfWork.Categories.GetByIdAsync(request.Id);
-        
-        // TODO Should we inform in return that the id was not found? Update/Get/Delete
-        // Padrao Result
-        if (entity is not null)
+        if (entity is null)
         {
-            entity.Update(request.Name);
-            _unitOfWork.Categories.UpdateAsync(entity);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Category not found");
         }
 
-        return Unit.Value;
+        entity.Update(request.Name);
+        unitOfWork.Categories.UpdateAsync(entity);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Category updated successfully");
     }
 }

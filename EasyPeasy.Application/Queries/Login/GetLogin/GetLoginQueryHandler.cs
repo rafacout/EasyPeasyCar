@@ -5,31 +5,21 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Login.GetLogin;
 
-public class GetLoginQueryHandler : IRequestHandler<GetLoginQuery, LoginUserDto?>
+public class GetLoginQueryHandler(IUnitOfWork unitOfWork, IAuthService authService)
+    : IRequestHandler<GetLoginQuery, ResultDto<LoginUserDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IAuthService _authService;
-    
-    public GetLoginQueryHandler(IUnitOfWork unitOfWork, IAuthService authService)
+    public async Task<ResultDto<LoginUserDto>> Handle(GetLoginQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _authService = authService;
-    }
-    
-    public async Task<LoginUserDto?> Handle(GetLoginQuery request, CancellationToken cancellationToken)
-    {
-        if (request == null) throw new ArgumentNullException(nameof(request));
+        var hashPassword = authService.ComputeSha256Hash(request.Password);
         
-        var hashPassword = _authService.ComputeSha256Hash(request.Password);
-        
-        var user = await _unitOfWork.Users.GetByEmailAndPasswordAsync(request.Email, hashPassword);
+        var user = await unitOfWork.Users.GetByEmailAndPasswordAsync(request.Email, hashPassword);
         
         if (user == null)
         {
-            return null;
+            return ResultDto<LoginUserDto>.Failure("Invalid email or password");
         }
         
-        var token = _authService.GenerateJwt(user.Email, user.Role.ToString());
+        var token = authService.GenerateJwt(user.Email, user.Role.ToString());
 
         var userViewModel = new LoginUserDto()
         {
@@ -38,6 +28,6 @@ public class GetLoginQueryHandler : IRequestHandler<GetLoginQuery, LoginUserDto?
             Token = token
         };
 
-        return userViewModel;
+        return ResultDto<LoginUserDto>.Success(userViewModel);
     }
 }

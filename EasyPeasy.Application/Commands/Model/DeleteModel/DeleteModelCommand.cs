@@ -1,13 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Model.DeleteModel;
 
-public class DeleteModelCommand : IRequest<Unit>
+public class DeleteModelCommand(Guid id) : IRequest<ResultDto<Guid>>
 {
-    public Guid Id { get; set; }
-
-    public DeleteModelCommand(Guid id)
-    {
-        Id = id;
-    }
+    public Guid Id { get; set; } = id;
 }

@@ -1,9 +1,10 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.DeleteStore;
 
-public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, Unit>
+public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, ResultDto<Guid>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -12,18 +13,18 @@ public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, Uni
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Unit> Handle(DeleteStoreCommand request, CancellationToken cancellationToken)
+    public async Task<ResultDto<Guid>> Handle(DeleteStoreCommand request, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request, nameof(request));
-        
         var store = await _unitOfWork.Stores.GetByIdAsync(request.Id);
-        
-        if (store != null)
+
+        if (store == null)
         {
-            await _unitOfWork.Stores.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Store not found");
         }
-        
-        return Unit.Value;
+
+        await _unitOfWork.Stores.DeleteAsync(request.Id);
+        await _unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Store deleted successfully");
     }
 }

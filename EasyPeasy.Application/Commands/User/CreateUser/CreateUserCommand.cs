@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.User.CreateUser;
 
-public class CreateUserCommand : IRequest<Guid>
+public class CreateUserCommand : IRequest<ResultDto<Guid>>
 {
     public string Email { get;  set; }
     public string Password { get;  set; }

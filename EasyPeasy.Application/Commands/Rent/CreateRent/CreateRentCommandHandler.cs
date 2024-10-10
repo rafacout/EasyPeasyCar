@@ -1,29 +1,21 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Domain.Enum;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.CreateRent;
 
-public class CreateRentCommandHandler : IRequestHandler<CreateRentCommand, Guid>
+public class CreateRentCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateRentCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CreateRentCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(CreateRentCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
-
-    public async Task<Guid> Handle(CreateRentCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
         var rent = new Domain.Entities.Rent(request.UserId, request.StorePickUpId, request.StoreDropOffId,
             request.VehicleId, request.CategoryId, (StatusRent)Enum.Parse(typeof(StatusRent), request.Status),
             request.StartDate, request.ExpectedDate, request.ReturnedDate, request.Total);
 
-        await _unitOfWork.Rents.CreateAsync(rent);
-        await _unitOfWork.CompleteAsync();
+        await unitOfWork.Rents.CreateAsync(rent);
+        await unitOfWork.CompleteAsync();
 
-        return rent.Id;
+        return ResultDto<Guid>.Success(rent.Id, "Rent created successfully");
     }
 }

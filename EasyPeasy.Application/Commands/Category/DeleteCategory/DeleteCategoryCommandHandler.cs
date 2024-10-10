@@ -1,30 +1,26 @@
 ﻿using EasyPeasy.Application.Commands.Category.UpdateCategory;
+using EasyPeasy.Application.DTOs;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Category.DeleteCategory;
 
-public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Unit>
+public class DeleteCategoryCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<DeleteCategoryCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var category = await unitOfWork.Categories.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-        
-        var category = await _unitOfWork.Categories.GetByIdAsync(request.Id);
-        
-        if (category != null)
+        if (category == null)
         {
-            await _unitOfWork.Categories.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Category not found");
         }
-        
-        return Unit.Value;
+
+        await unitOfWork.Categories.DeleteAsync(request.Id);
+        await unitOfWork.CompleteAsync();
+
+        //TODO Return Guid instead of Unit
+        return ResultDto<Guid>.Success(request.Id, "Category deleted successfully");
     }
 }

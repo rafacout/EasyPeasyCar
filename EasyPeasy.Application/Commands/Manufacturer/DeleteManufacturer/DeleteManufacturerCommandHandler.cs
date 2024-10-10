@@ -1,29 +1,24 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
 
-public class DeleteManufacturerCommandHandler : IRequestHandler<DeleteManufacturerCommand, Unit>
+public class DeleteManufacturerCommandHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<DeleteManufacturerCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteManufacturerCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(DeleteManufacturerCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var manufacturer = await unitOfWork.Manufacturers.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(DeleteManufacturerCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-        
-        var manufacturer = await _unitOfWork.Manufacturers.GetByIdAsync(request.Id);
-        
-        if (manufacturer != null)
+        if (manufacturer == null)
         {
-            await _unitOfWork.Manufacturers.DeleteAsync(request.Id);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Manufacturer not found");
         }
 
-        return Unit.Value;
+        await unitOfWork.Manufacturers.DeleteAsync(request.Id);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Manufacturer deleted successfully");
     }
 }

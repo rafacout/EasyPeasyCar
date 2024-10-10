@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
 
-public class CreateVehicleCommand : IRequest<Guid>
+public class CreateVehicleCommand : IRequest<ResultDto<Guid>>
 {
     public string DocumentId { get; set; }
     public string Name { get; set; }

@@ -1,28 +1,20 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Domain.Enum;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Model.CreateModel;
 
-public class CreateModelCommandHandler : IRequestHandler<CreateModelCommand, Guid>
+public class CreateModelCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateModelCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CreateModelCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(CreateModelCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
-
-    public async Task<Guid> Handle(CreateModelCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
         var model = new Domain.Entities.Model(request.Name, request.Year, request.ManufacturerId, request.CategoryId,
             (TransmissionType)Enum.Parse(typeof(TransmissionType), request.Transmission), request.Motor);
 
-        await _unitOfWork.Models.CreateAsync(model);
-        await _unitOfWork.CompleteAsync();
+        await unitOfWork.Models.CreateAsync(model);
+        await unitOfWork.CompleteAsync();
 
-        return model.Id;
+        return ResultDto<Guid>.Success(model.Id, "Model created successfully");
     }
 }

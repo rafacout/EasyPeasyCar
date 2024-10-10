@@ -8,24 +8,24 @@ Content-Type: application/json
 }
 
 > {% 
-    client.global.set("auth_token", response.body.token); 
+    client.global.set("auth_token", response.body.data.token); 
 %}
 
 ### Create User
-#POST {{host}}/api/v{{version}}/User
-#Content-Type: application/json
-#
-#{
-#  "email": "email",
-#  "password": "11111",
-#  "role": "Admin",
-#  "document": "123456789", 
-#  "birthdate": "1983-07-24",
-#  "phone": "11994627125",
-#  "address": "Av Reserva do Japy",
-#  "city": "Jundiaí",
-#  "state": "SP",
-#  "country": "Brazil",
-#  "zipcode": "13211772"  
-#}
-#
+POST {{host}}/api/v{{version}}/User
+Content-Type: application/json
+
+{
+  "email": "rafacout@gmail.com",
+  "password": "789612",
+  "role": "Admin",
+  "document": "123456789", 
+  "birthdate": "1983-07-24",
+  "phone": "11994627125",
+  "address": "Av Reserva do Japy",
+  "city": "Jundiaí",
+  "state": "SP",
+  "country": "Brazil",
+  "zipcode": "13211772"  
+}
+

@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.CreateStore;
 
-public class CreateStoreCommand : IRequest<Guid>
+public class CreateStoreCommand : IRequest<ResultDto<Guid>>
 {
     public string Name { get; set; }
     public string Address { get; set; }

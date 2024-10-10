@@ -3,12 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Rent.GetRentById;
 
-public class GetRentByIdQuery : IRequest<RentDto>
+public class GetRentByIdQuery(Guid id) : IRequest<ResultDto<RentDto>>
 {
-    public GetRentByIdQuery(Guid id)
-    {
-        Id = id;
-    }
-    
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

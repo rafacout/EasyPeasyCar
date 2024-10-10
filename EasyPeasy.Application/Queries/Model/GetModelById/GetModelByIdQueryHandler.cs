@@ -6,23 +6,20 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Model.GetModelById;
 
-public class GetModelByIdQueryHandler : IRequestHandler<GetModelByIdQuery, ModelDto>
+public class GetModelByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetModelByIdQuery, ResultDto<ModelDto>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetModelByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<ResultDto<ModelDto>> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+        var model = await unitOfWork.Models.GetByIdAsync(request.Id);
+        
+        if (model == null)
+        {
+            return ResultDto<ModelDto>.Failure($"Model '{request.Id}' not exist.");
+        }
 
-    public async Task<ModelDto> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
+        var modelDto = mapper.Map<ModelDto>(model);
         
-        var model = await _unitOfWork.Models.GetByIdAsync(request.Id);
-        
-        return _mapper.Map<ModelDto>(model);
+        return ResultDto<ModelDto>.Success(modelDto);
     }
 }

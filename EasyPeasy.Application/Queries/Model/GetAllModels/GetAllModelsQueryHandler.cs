@@ -5,20 +5,15 @@ using MediatR;
 
 namespace EasyPeasy.Application.Queries.Model.GetAllModels;
 
-public class GetAllModelsQueryHandler : IRequestHandler<GetAllModelsQuery, List<ModelDto>>
+public class GetAllModelsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    : IRequestHandler<GetAllModelsQuery, ResultDto<List<ModelDto>>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public GetAllModelsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public async Task<ResultDto<List<ModelDto>>> Handle(GetAllModelsQuery request, CancellationToken cancellationToken)
     {
-        _mapper = mapper;
-        _unitOfWork = unitOfWork;
-    }
-
-    public async Task<List<ModelDto>> Handle(GetAllModelsQuery request, CancellationToken cancellationToken)
-    {
-        var models = await _unitOfWork.Models.GetAllAsync();
-        return _mapper.Map<List<ModelDto>>(models);
+        var models = await unitOfWork.Models.GetAllAsync();
+        
+        var modelDtos = mapper.Map<List<ModelDto>>(models);
+        
+        return ResultDto<List<ModelDto>>.Success(modelDtos);
     }
 }

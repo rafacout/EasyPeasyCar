@@ -1,32 +1,27 @@
-﻿using EasyPeasy.Infrastructure.Persistence.Repositories;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Store.UpdateStore;
 
-public class UpdateStoreCommandHandler : IRequestHandler<UpdateStoreCommand, Unit>
+public class UpdateStoreCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateStoreCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateStoreCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(UpdateStoreCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var store = await unitOfWork.Stores.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(UpdateStoreCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request, nameof(request));
-        
-        var store = await _unitOfWork.Stores.GetByIdAsync(request.Id);
-
-        if (store != null)
+        if (store == null)
         {
-            store.Update(request.Name, request.Address, request.City, request.State, request.Zip, request.Phone, request.Email);
-
-            _unitOfWork.Stores.UpdateAsync(store);
-            
-            await _unitOfWork.CompleteAsync();    
+            return ResultDto<Guid>.Failure("Store not found");
         }
 
-        return Unit.Value;
+        store.Update(request.Name, request.Address, request.City, request.State, request.Zip, request.Phone,
+            request.Email);
+
+        unitOfWork.Stores.UpdateAsync(store);
+
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Store updated successfully");
     }
 }

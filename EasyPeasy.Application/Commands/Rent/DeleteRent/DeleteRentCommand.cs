@@ -1,12 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.DeleteRent;
 
-public class DeleteRentCommand : IRequest<Unit>
+public class DeleteRentCommand(Guid id) : IRequest<ResultDto<Guid>>
 {
-    public DeleteRentCommand(Guid id)
-    {
-        Id = id;
-    }
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

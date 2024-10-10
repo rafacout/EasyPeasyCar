@@ -1,13 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.User.DeleteUser;
 
-public class DeleteUserCommand : IRequest<Unit>
+public class DeleteUserCommand(Guid id) : IRequest<ResultDto<Guid>>
 {
-    public DeleteUserCommand(Guid id)
-    {
-        Id = id;
-    }
-    
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = id;
 }

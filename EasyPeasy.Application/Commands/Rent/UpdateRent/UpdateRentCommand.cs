@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using EasyPeasy.Application.DTOs;
+using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.UpdateRent;
 
-public class UpdateRentCommand : IRequest<Unit>
+public class UpdateRentCommand : IRequest<ResultDto<Guid>>
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }

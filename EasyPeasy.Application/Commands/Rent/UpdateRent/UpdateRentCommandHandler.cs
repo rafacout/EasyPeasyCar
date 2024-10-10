@@ -1,33 +1,27 @@
-﻿using EasyPeasy.Domain.Enum;
+﻿using EasyPeasy.Application.DTOs;
+using EasyPeasy.Domain.Enum;
 using EasyPeasy.Infrastructure.Persistence.Repositories;
 using MediatR;
 
 namespace EasyPeasy.Application.Commands.Rent.UpdateRent;
 
-public class UpdateRentCommandHandler : IRequestHandler<UpdateRentCommand, Unit>
+public class UpdateRentCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateRentCommand, ResultDto<Guid>>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateRentCommandHandler(IUnitOfWork unitOfWork)
+    public async Task<ResultDto<Guid>> Handle(UpdateRentCommand request, CancellationToken cancellationToken)
     {
-        _unitOfWork = unitOfWork;
-    }
+        var rent = await unitOfWork.Rents.GetByIdAsync(request.Id);
 
-    public async Task<Unit> Handle(UpdateRentCommand request, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var rent = await _unitOfWork.Rents.GetByIdAsync(request.Id);
-
-        if (rent != null)
+        if (rent == null)
         {
-            rent.Update(request.UserId, request.StorePickUpId, request.StoreDropOffId, request.VehicleId,
-                request.CategoryId, (StatusRent)Enum.Parse(typeof(StatusRent), request.Status), request.StartDate,
-                request.ExpectedDate, request.ReturnedDate, request.Total);
-            _unitOfWork.Rents.UpdateAsync(rent);
-            await _unitOfWork.CompleteAsync();
+            return ResultDto<Guid>.Failure("Rent not found");
         }
 
-        return Unit.Value;
+        rent.Update(request.UserId, request.StorePickUpId, request.StoreDropOffId, request.VehicleId,
+            request.CategoryId, (StatusRent)Enum.Parse(typeof(StatusRent), request.Status), request.StartDate,
+            request.ExpectedDate, request.ReturnedDate, request.Total);
+        unitOfWork.Rents.UpdateAsync(rent);
+        await unitOfWork.CompleteAsync();
+
+        return ResultDto<Guid>.Success(request.Id, "Rent updated successfully");
     }
 }

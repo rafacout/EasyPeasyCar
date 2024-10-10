@@ -15,7 +15,7 @@ Content-Type: application/json
 
 > {%
     client.log(response.body);
-    client.global.set("store_id", response.body);
+    client.global.set("store_id", response.body.data);
 %}
 
 
