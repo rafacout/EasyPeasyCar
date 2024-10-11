@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Rents.CreateRent;
 
-public class CreateRentCommand : IRequest<ResultDto<Guid>>
+public class CreateRentCommand : IRequest<ResultViewModel<Guid>>
 {
     public Guid UserId { get; set; }
     public Guid StorePickUpId { get; set; }

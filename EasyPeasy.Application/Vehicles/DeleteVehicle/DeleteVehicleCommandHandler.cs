@@ -5,20 +5,20 @@ using MediatR;
 namespace EasyPeasy.Application.Vehicles.DeleteVehicle;
 
 public class DeleteVehicleCommandHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<DeleteVehicleCommand, ResultDto<Guid>>
+    : IRequestHandler<DeleteVehicleCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(DeleteVehicleCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(DeleteVehicleCommand request, CancellationToken cancellationToken)
     {
         var vehicle = await unitOfWork.Vehicles.GetByIdAsync(request.Id);
 
         if (vehicle == null)
         {
-            return ResultDto<Guid>.Failure("Vehicle not found");
+            return ResultViewModel<Guid>.Failure("Vehicle not found");
         }
 
         await unitOfWork.Vehicles.DeleteAsync(request.Id);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "Vehicle deleted successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "Vehicle deleted successfully");
     }
 }

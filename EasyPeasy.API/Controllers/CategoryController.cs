@@ -41,6 +41,7 @@ public class CategoryController : ControllerBase
             
         var category = await _mediator.Send(categoryQuery);
 
+        //TODO Fix result pattern to return http status
         return Ok(category);
     }
     

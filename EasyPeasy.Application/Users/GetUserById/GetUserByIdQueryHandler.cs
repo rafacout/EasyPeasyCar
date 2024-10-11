@@ -7,19 +7,19 @@ using MediatR;
 namespace EasyPeasy.Application.Users.GetUserById;
 
 public class GetUserByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetUserByIdQuery, ResultDto<UserDto>>
+    : IRequestHandler<GetUserByIdQuery, ResultViewModel<UserViewModel>>
 {
-    public async Task<ResultDto<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<UserViewModel>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.Users.GetByIdAsync(request.Id);
         
         if (user == null)
         {
-            return ResultDto<UserDto>.Failure($"User '{request.Id}' not exist.");
+            return ResultViewModel<UserViewModel>.Failure($"User '{request.Id}' not exist.");
         }
 
-        var userDto = mapper.Map<UserDto>(user);
+        var userDto = mapper.Map<UserViewModel>(user);
         
-        return ResultDto<UserDto>.Success(userDto);
+        return ResultViewModel<UserViewModel>.Success(userDto);
     }
 }

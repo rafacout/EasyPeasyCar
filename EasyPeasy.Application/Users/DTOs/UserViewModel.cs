@@ -1,6 +1,6 @@
 ﻿namespace EasyPeasy.Application.Users.DTOs;
 
-public record UserDto
+public record UserViewModel
 {
     public Guid Id { get; set; }
     public string Email { get; private set; }

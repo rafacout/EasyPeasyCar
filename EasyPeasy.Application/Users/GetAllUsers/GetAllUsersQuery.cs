@@ -4,6 +4,6 @@ using MediatR;
 
 namespace EasyPeasy.Application.Users.GetAllUsers;
 
-public class GetAllUsersQuery : IRequest<ResultDto<List<UserDto>>>
+public class GetAllUsersQuery : IRequest<ResultViewModel<List<UserViewModel>>>
 {
 }

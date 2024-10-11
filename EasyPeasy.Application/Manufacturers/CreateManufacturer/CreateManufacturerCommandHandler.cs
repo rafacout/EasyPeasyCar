@@ -5,9 +5,9 @@ using MediatR;
 namespace EasyPeasy.Application.Manufacturers.CreateManufacturer;
 
 public class CreateManufacturerCommandHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateManufacturerCommand, ResultDto<Guid>>
+    : IRequestHandler<CreateManufacturerCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(CreateManufacturerCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(CreateManufacturerCommand request, CancellationToken cancellationToken)
     {
         var entity = new Domain.Entities.Manufacturer(request.Name, request.Country);
         
@@ -15,6 +15,6 @@ public class CreateManufacturerCommandHandler(IUnitOfWork unitOfWork)
         
         await unitOfWork.CompleteAsync();
         
-        return ResultDto<Guid>.Success(id, "Manufacturer created successfully");
+        return ResultViewModel<Guid>.Success(id, "Manufacturer created successfully");
     }
 }

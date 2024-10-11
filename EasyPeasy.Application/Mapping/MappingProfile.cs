@@ -15,12 +15,12 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Category, CategoryDto>();
-        CreateMap<Manufacturer, ManufacturerDto>();
-        CreateMap<Model, ModelDto>();
-        CreateMap<Rent, RentDto>();
-        CreateMap<Store, StoreDto>();
-        CreateMap<User, UserDto>();
-        CreateMap<Vehicle, VehicleDto>();
+        CreateMap<Category, CategoryViewModel>();
+        CreateMap<Manufacturer, ManufacturerViewModel>();
+        CreateMap<Model, ModelViewModel>();
+        CreateMap<Rent, RentViewModel>();
+        CreateMap<Store, StoreViewModel>();
+        CreateMap<User, UserViewModel>();
+        CreateMap<Vehicle, VehicleViewModel>();
     }
 }

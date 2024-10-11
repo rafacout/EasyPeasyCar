@@ -4,7 +4,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Users.GetUserById;
 
-public class GetUserByIdQuery(Guid id) : IRequest<ResultDto<UserDto>>
+public class GetUserByIdQuery(Guid id) : IRequest<ResultViewModel<UserViewModel>>
 {
     public Guid Id { get; set; } = id;
 }

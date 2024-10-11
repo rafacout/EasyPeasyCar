@@ -6,9 +6,9 @@ using MediatR;
 namespace EasyPeasy.Application.Vehicles.CreateVehicle;
 
 public class CreateVehicleCommandHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateVehicleCommand, ResultDto<Guid>>
+    : IRequestHandler<CreateVehicleCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
     {
         var vehicle = new Domain.Entities.Vehicle(request.DocumentId, request.Name, request.ModelId, request.DailyRate,
             request.Mileage, request.LicensePlate, request.Color,
@@ -17,6 +17,6 @@ public class CreateVehicleCommandHandler(IUnitOfWork unitOfWork)
         await unitOfWork.Vehicles.CreateAsync(vehicle);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(vehicle.Id, "Vehicle created successfully");
+        return ResultViewModel<Guid>.Success(vehicle.Id, "Vehicle created successfully");
     }
 }

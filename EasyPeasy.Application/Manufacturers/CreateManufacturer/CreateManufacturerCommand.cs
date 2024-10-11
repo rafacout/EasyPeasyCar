@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Manufacturers.CreateManufacturer;
 
-public class CreateManufacturerCommand : IRequest<ResultDto<Guid>>
+public class CreateManufacturerCommand : IRequest<ResultViewModel<Guid>>
 {
     public string Name { get; set; }
     

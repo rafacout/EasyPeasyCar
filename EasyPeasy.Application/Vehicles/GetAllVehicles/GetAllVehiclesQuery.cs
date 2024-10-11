@@ -4,6 +4,6 @@ using MediatR;
 
 namespace EasyPeasy.Application.Vehicles.GetAllVehicles;
 
-public class GetAllVehiclesQuery : IRequest<ResultDto<List<VehicleDto>>>
+public class GetAllVehiclesQuery : IRequest<ResultViewModel<List<VehicleViewModel>>>
 {
 }

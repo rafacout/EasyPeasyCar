@@ -1,6 +1,6 @@
 ﻿namespace EasyPeasy.Application.Models.DTOs;
 
-public record ModelDto
+public record ModelViewModel
 {
     public Guid Id { get; set; }
     public string Name { get; private set; }

@@ -5,20 +5,20 @@ using MediatR;
 namespace EasyPeasy.Application.Categories.DeleteCategory;
 
 public class DeleteCategoryCommandHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<DeleteCategoryCommand, ResultDto<Guid>>
+    : IRequestHandler<DeleteCategoryCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = await unitOfWork.Categories.GetByIdAsync(request.Id);
 
         if (category == null)
         {
-            return ResultDto<Guid>.Failure("Category not found");
+            return ResultViewModel<Guid>.Failure("Category not found");
         }
 
         await unitOfWork.Categories.DeleteAsync(request.Id);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "Category deleted successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "Category deleted successfully");
     }
 }

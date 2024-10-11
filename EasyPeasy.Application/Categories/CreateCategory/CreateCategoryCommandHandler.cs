@@ -5,13 +5,13 @@ using MediatR;
 namespace EasyPeasy.Application.Categories.CreateCategory;
 
 public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateCategoryCommand, ResultDto<Guid>>
+    : IRequestHandler<CreateCategoryCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = new Domain.Entities.Category(request.Name);
         var id = await unitOfWork.Categories.CreateAsync(category);
         await unitOfWork.CompleteAsync();
-        return ResultDto<Guid>.Success(id, "Category created successfully");
+        return ResultViewModel<Guid>.Success(id, "Category created successfully");
     }
 }

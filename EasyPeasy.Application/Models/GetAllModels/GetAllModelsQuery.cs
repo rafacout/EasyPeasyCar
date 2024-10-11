@@ -4,6 +4,6 @@ using MediatR;
 
 namespace EasyPeasy.Application.Models.GetAllModels;
 
-public class GetAllModelsQuery : IRequest<ResultDto<List<ModelDto>>>
+public class GetAllModelsQuery : IRequest<ResultViewModel<List<ModelViewModel>>>
 {
 }

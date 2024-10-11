@@ -7,9 +7,9 @@ using MediatR;
 namespace EasyPeasy.Application.Users.GetLogin;
 
 public class GetLoginQueryHandler(IUnitOfWork unitOfWork, IAuthService authService)
-    : IRequestHandler<GetLoginQuery, ResultDto<LoginUserDto>>
+    : IRequestHandler<GetLoginQuery, ResultViewModel<LoginViewModel>>
 {
-    public async Task<ResultDto<LoginUserDto>> Handle(GetLoginQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<LoginViewModel>> Handle(GetLoginQuery request, CancellationToken cancellationToken)
     {
         var hashPassword = authService.ComputeSha256Hash(request.Password);
         
@@ -17,18 +17,18 @@ public class GetLoginQueryHandler(IUnitOfWork unitOfWork, IAuthService authServi
         
         if (user == null)
         {
-            return ResultDto<LoginUserDto>.Failure("Invalid email or password");
+            return ResultViewModel<LoginViewModel>.Failure("Invalid email or password");
         }
         
         var token = authService.GenerateJwt(user.Email, user.Role.ToString());
 
-        var userViewModel = new LoginUserDto()
+        var userViewModel = new LoginViewModel()
         {
             UserName = user.Email,
             Role = user.Role.ToString(),
             Token = token
         };
 
-        return ResultDto<LoginUserDto>.Success(userViewModel);
+        return ResultViewModel<LoginViewModel>.Success(userViewModel);
     }
 }

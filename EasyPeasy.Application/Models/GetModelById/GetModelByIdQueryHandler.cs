@@ -7,19 +7,19 @@ using MediatR;
 namespace EasyPeasy.Application.Models.GetModelById;
 
 public class GetModelByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetModelByIdQuery, ResultDto<ModelDto>>
+    : IRequestHandler<GetModelByIdQuery, ResultViewModel<ModelViewModel>>
 {
-    public async Task<ResultDto<ModelDto>> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<ModelViewModel>> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
     {
         var model = await unitOfWork.Models.GetByIdAsync(request.Id);
         
         if (model == null)
         {
-            return ResultDto<ModelDto>.Failure($"Model '{request.Id}' not exist.");
+            return ResultViewModel<ModelViewModel>.Failure($"Model '{request.Id}' not exist.");
         }
 
-        var modelDto = mapper.Map<ModelDto>(model);
+        var modelDto = mapper.Map<ModelViewModel>(model);
         
-        return ResultDto<ModelDto>.Success(modelDto);
+        return ResultViewModel<ModelViewModel>.Success(modelDto);
     }
 }

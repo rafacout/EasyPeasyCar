@@ -5,15 +5,15 @@ using MediatR;
 
 namespace EasyPeasy.Application.Rents.UpdateRent;
 
-public class UpdateRentCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateRentCommand, ResultDto<Guid>>
+public class UpdateRentCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateRentCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(UpdateRentCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(UpdateRentCommand request, CancellationToken cancellationToken)
     {
         var rent = await unitOfWork.Rents.GetByIdAsync(request.Id);
 
         if (rent == null)
         {
-            return ResultDto<Guid>.Failure("Rent not found");
+            return ResultViewModel<Guid>.Failure("Rent not found");
         }
 
         rent.Update(request.UserId, request.StorePickUpId, request.StoreDropOffId, request.VehicleId,
@@ -22,6 +22,6 @@ public class UpdateRentCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
         unitOfWork.Rents.UpdateAsync(rent);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "Rent updated successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "Rent updated successfully");
     }
 }

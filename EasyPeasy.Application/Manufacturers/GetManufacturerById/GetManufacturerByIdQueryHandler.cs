@@ -7,19 +7,19 @@ using MediatR;
 namespace EasyPeasy.Application.Manufacturers.GetManufacturerById;
 
 public class GetManufacturerByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetManufacturerByIdQuery, ResultDto<ManufacturerDto>>
+    : IRequestHandler<GetManufacturerByIdQuery, ResultViewModel<ManufacturerViewModel>>
 {
-    public async Task<ResultDto<ManufacturerDto>> Handle(GetManufacturerByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<ManufacturerViewModel>> Handle(GetManufacturerByIdQuery request, CancellationToken cancellationToken)
     {
         var manufacturer = await unitOfWork.Manufacturers.GetByIdAsync(request.Id);
         
         if (manufacturer == null)
         {
-            return ResultDto<ManufacturerDto>.Failure($"Manufacturer '{request.Id}' not exist.");
+            return ResultViewModel<ManufacturerViewModel>.Failure($"Manufacturer '{request.Id}' not exist.");
         }
 
-        var manufacturerDto = mapper.Map<ManufacturerDto>(manufacturer);
+        var manufacturerDto = mapper.Map<ManufacturerViewModel>(manufacturer);
         
-        return ResultDto<ManufacturerDto>.Success(manufacturerDto);
+        return ResultViewModel<ManufacturerViewModel>.Success(manufacturerDto);
     }
 }

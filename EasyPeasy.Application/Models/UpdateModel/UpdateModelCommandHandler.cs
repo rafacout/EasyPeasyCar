@@ -5,15 +5,15 @@ using MediatR;
 
 namespace EasyPeasy.Application.Models.UpdateModel;
 
-public class UpdateModelCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateModelCommand, ResultDto<Guid>>
+public class UpdateModelCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateModelCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(UpdateModelCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(UpdateModelCommand request, CancellationToken cancellationToken)
     {
         var model = await unitOfWork.Models.GetByIdAsync(request.Id);
 
         if (model == null)
         {
-            return ResultDto<Guid>.Failure("Model not found");
+            return ResultViewModel<Guid>.Failure("Model not found");
         }
 
         model.Update(request.Name, request.Year, request.ManufacturerId, request.CategoryId,
@@ -21,6 +21,6 @@ public class UpdateModelCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler
         unitOfWork.Models.UpdateAsync(model);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "Model updated successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "Model updated successfully");
     }
 }

@@ -7,14 +7,14 @@ using MediatR;
 namespace EasyPeasy.Application.Users.GetAllUsers;
 
 public class GetAllUsersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetAllUsersQuery, ResultDto<List<UserDto>>>
+    : IRequestHandler<GetAllUsersQuery, ResultViewModel<List<UserViewModel>>>
 {
-    public async Task<ResultDto<List<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<List<UserViewModel>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await unitOfWork.Users.GetAllAsync();
 
-        var userDtos = mapper.Map<List<UserDto>>(users);
+        var userDtos = mapper.Map<List<UserViewModel>>(users);
         
-        return ResultDto<List<UserDto>>.Success(userDtos);
+        return ResultViewModel<List<UserViewModel>>.Success(userDtos);
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Users.CreateUser;
 
-public class CreateUserCommand : IRequest<ResultDto<Guid>>
+public class CreateUserCommand : IRequest<ResultViewModel<Guid>>
 {
     public string Email { get;  set; }
     public string Password { get;  set; }

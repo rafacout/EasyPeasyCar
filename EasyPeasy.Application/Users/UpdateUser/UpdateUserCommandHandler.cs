@@ -5,15 +5,15 @@ using MediatR;
 
 namespace EasyPeasy.Application.Users.UpdateUser;
 
-public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserCommand, ResultDto<Guid>>
+public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.Users.GetByIdAsync(request.Id);
 
         if (user == null)
         {
-            return ResultDto<Guid>.Failure("User not found");
+            return ResultViewModel<Guid>.Failure("User not found");
         }
 
         user.Update(request.Email, request.Password, (RoleType)Enum.Parse(typeof(RoleType), request.Role),
@@ -24,6 +24,6 @@ public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
 
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "User updated successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "User updated successfully");
     }
 }

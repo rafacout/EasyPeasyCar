@@ -4,7 +4,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Users.GetLogin;
 
-public class GetLoginQuery : IRequest<ResultDto<LoginUserDto>>
+public class GetLoginQuery : IRequest<ResultViewModel<LoginViewModel>>
 {
     public required string Email { get; set; }
     public required string Password { get; set; }

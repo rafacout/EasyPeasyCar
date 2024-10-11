@@ -7,19 +7,19 @@ using MediatR;
 namespace EasyPeasy.Application.Stores.GetStoreById;
 
 public class GetStoreByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetStoreByIdQuery, ResultDto<StoreDto>>
+    : IRequestHandler<GetStoreByIdQuery, ResultViewModel<StoreViewModel>>
 {
-    public async Task<ResultDto<StoreDto>> Handle(GetStoreByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<StoreViewModel>> Handle(GetStoreByIdQuery request, CancellationToken cancellationToken)
     {
         var store = await unitOfWork.Stores.GetByIdAsync(request.Id);
         
         if (store == null)
         {
-            return ResultDto<StoreDto>.Failure($"Store '{request.Id}' not exist.");
+            return ResultViewModel<StoreViewModel>.Failure($"Store '{request.Id}' not exist.");
         }
 
-        var storeDto = mapper.Map<StoreDto>(store);
+        var storeDto = mapper.Map<StoreViewModel>(store);
         
-        return ResultDto<StoreDto>.Success(storeDto);
+        return ResultViewModel<StoreViewModel>.Success(storeDto);
     }
 }

@@ -7,14 +7,14 @@ using MediatR;
 namespace EasyPeasy.Application.Manufacturers.GetAllManufacturers;
 
 public class GetAllManufacturersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetAllManufacturersQuery, ResultDto<List<ManufacturerDto>>>
+    : IRequestHandler<GetAllManufacturersQuery, ResultViewModel<List<ManufacturerViewModel>>>
 {
-    public async Task<ResultDto<List<ManufacturerDto>>> Handle(GetAllManufacturersQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<List<ManufacturerViewModel>>> Handle(GetAllManufacturersQuery request, CancellationToken cancellationToken)
     {
         var manufacturers = await unitOfWork.Manufacturers.GetAllAsync();
 
-        var manufacturerDtos = mapper.Map<List<ManufacturerDto>>(manufacturers);
+        var manufacturerDtos = mapper.Map<List<ManufacturerViewModel>>(manufacturers);
         
-        return ResultDto<List<ManufacturerDto>>.Success(manufacturerDtos);
+        return ResultViewModel<List<ManufacturerViewModel>>.Success(manufacturerDtos);
     }
 }

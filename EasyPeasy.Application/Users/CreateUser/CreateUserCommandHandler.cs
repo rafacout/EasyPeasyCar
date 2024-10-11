@@ -7,9 +7,9 @@ using MediatR;
 namespace EasyPeasy.Application.Users.CreateUser;
 
 public class CreateUserCommandHandler(IAuthService authService, IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateUserCommand, ResultDto<Guid>>
+    : IRequestHandler<CreateUserCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var passwordHash = authService.ComputeSha256Hash(request.Password);
         
@@ -21,6 +21,6 @@ public class CreateUserCommandHandler(IAuthService authService, IUnitOfWork unit
         await unitOfWork.Users.CreateAsync(user);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(user.Id, "User created successfully");
+        return ResultViewModel<Guid>.Success(user.Id, "User created successfully");
     }
 }

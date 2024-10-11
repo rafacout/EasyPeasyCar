@@ -8,12 +8,12 @@ namespace EasyPeasy.Application.Categories.GetAllCategories;
 
 //TODO Avoid using List<T> in the return type of the query handler. Use IEnumerable<T> instead.
 public class GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetAllCategoriesQuery, ResultDto<List<CategoryDto>>>
+    : IRequestHandler<GetAllCategoriesQuery, ResultViewModel<List<CategoryViewModel>>>
 {
-    public async Task<ResultDto<List<CategoryDto>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<List<CategoryViewModel>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
         var categories = await unitOfWork.Categories.GetAllAsync();
-        var data = mapper.Map<List<CategoryDto>>(categories);
-        return ResultDto<List<CategoryDto>>.Success(data);
+        var data = mapper.Map<List<CategoryViewModel>>(categories);
+        return ResultViewModel<List<CategoryViewModel>>.Success(data);
     }
 }

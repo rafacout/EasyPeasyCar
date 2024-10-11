@@ -1,6 +1,6 @@
 ﻿namespace EasyPeasy.Application.Rents.DTOs;
 
-public record RentDto
+public record RentViewModel
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }

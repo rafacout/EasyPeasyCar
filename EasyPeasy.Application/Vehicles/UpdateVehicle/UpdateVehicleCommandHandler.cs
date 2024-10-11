@@ -6,15 +6,15 @@ using MediatR;
 namespace EasyPeasy.Application.Vehicles.UpdateVehicle;
 
 public class UpdateVehicleCommandHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<UpdateVehicleCommand, ResultDto<Guid>>
+    : IRequestHandler<UpdateVehicleCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(UpdateVehicleCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(UpdateVehicleCommand request, CancellationToken cancellationToken)
     {
         var vehicle = await unitOfWork.Vehicles.GetByIdAsync(request.Id);
 
         if (vehicle == null)
         {
-            return ResultDto<Guid>.Failure("Vehicle not found");
+            return ResultViewModel<Guid>.Failure("Vehicle not found");
         }
 
         vehicle.Update(request.DocumentId, request.Name, request.ModelId, request.DailyRate, request.Mileage,
@@ -24,6 +24,6 @@ public class UpdateVehicleCommandHandler(IUnitOfWork unitOfWork)
         unitOfWork.Vehicles.UpdateAsync(vehicle);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "Vehicle updated successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "Vehicle updated successfully");
     }
 }

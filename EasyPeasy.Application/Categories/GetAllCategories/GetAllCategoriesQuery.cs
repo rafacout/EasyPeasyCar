@@ -4,6 +4,6 @@ using MediatR;
 
 namespace EasyPeasy.Application.Categories.GetAllCategories;
 
-public class GetAllCategoriesQuery : IRequest<ResultDto<List<CategoryDto>>>
+public class GetAllCategoriesQuery : IRequest<ResultViewModel<List<CategoryViewModel>>>
 {
 }

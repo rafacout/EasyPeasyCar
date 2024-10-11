@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Models.UpdateModel;
 
-public class UpdateModelCommand : IRequest<ResultDto<Guid>>
+public class UpdateModelCommand : IRequest<ResultViewModel<Guid>>
 {
     public Guid Id { get;  set; }
     public string Name { get;  set; }

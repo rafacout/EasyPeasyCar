@@ -4,20 +4,20 @@ using MediatR;
 
 namespace EasyPeasy.Application.Users.DeleteUser;
 
-public class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteUserCommand, ResultDto<Guid>>
+public class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteUserCommand, ResultViewModel<Guid>>
 {
-    public async Task<ResultDto<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.Users.GetByIdAsync(request.Id);
 
         if (user == null)
         {
-            return ResultDto<Guid>.Failure("User not found");
+            return ResultViewModel<Guid>.Failure("User not found");
         }
 
         await unitOfWork.Users.DeleteAsync(request.Id);
         await unitOfWork.CompleteAsync();
 
-        return ResultDto<Guid>.Success(request.Id, "User deleted successfully");
+        return ResultViewModel<Guid>.Success(request.Id, "User deleted successfully");
     }
 }

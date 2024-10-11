@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Models.DeleteModel;
 
-public class DeleteModelCommand(Guid id) : IRequest<ResultDto<Guid>>
+public class DeleteModelCommand(Guid id) : IRequest<ResultViewModel<Guid>>
 {
     public Guid Id { get; set; } = id;
 }

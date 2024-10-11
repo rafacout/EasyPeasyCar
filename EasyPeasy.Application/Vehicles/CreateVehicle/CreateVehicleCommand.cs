@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Vehicles.CreateVehicle;
 
-public class CreateVehicleCommand : IRequest<ResultDto<Guid>>
+public class CreateVehicleCommand : IRequest<ResultViewModel<Guid>>
 {
     public string DocumentId { get; set; }
     public string Name { get; set; }

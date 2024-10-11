@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Stores.CreateStore;
 
-public class CreateStoreCommand : IRequest<ResultDto<Guid>>
+public class CreateStoreCommand : IRequest<ResultViewModel<Guid>>
 {
     public string Name { get; set; }
     public string Address { get; set; }

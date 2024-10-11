@@ -1,6 +1,6 @@
 ﻿namespace EasyPeasy.Application.Vehicles.DTOs;
 
-public record VehicleDto
+public record VehicleViewModel
 {
     public Guid Id { get; set; }
     public string DocumentId { get; set; }

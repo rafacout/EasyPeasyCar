@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Models.CreateModel;
 
-public class CreateModelCommand : IRequest<ResultDto<Guid>>
+public class CreateModelCommand : IRequest<ResultViewModel<Guid>>
 {
     public string Name { get;  set; }
     public int Year { get;  set; }

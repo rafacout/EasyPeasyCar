@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EasyPeasy.Application.Rents.UpdateRent;
 
-public class UpdateRentCommand : IRequest<ResultDto<Guid>>
+public class UpdateRentCommand : IRequest<ResultViewModel<Guid>>
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
