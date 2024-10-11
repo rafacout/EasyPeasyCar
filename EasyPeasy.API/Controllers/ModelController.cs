@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Model.CreateModel;
-using EasyPeasy.Application.Commands.Model.DeleteModel;
-using EasyPeasy.Application.Commands.Model.UpdateModel;
-using EasyPeasy.Application.Queries.Model.GetAllModels;
-using EasyPeasy.Application.Queries.Model.GetModelById;
+using EasyPeasy.Application.Models.CreateModel;
+using EasyPeasy.Application.Models.DeleteModel;
+using EasyPeasy.Application.Models.GetAllModels;
+using EasyPeasy.Application.Models.GetModelById;
+using EasyPeasy.Application.Models.UpdateModel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

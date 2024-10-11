@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
-using EasyPeasy.Application.Queries.Manufacturer.GetAllManufacturers;
-using EasyPeasy.Application.Queries.Manufacturer.GetManufacturerById;
+using EasyPeasy.Application.Manufacturers.CreateManufacturer;
+using EasyPeasy.Application.Manufacturers.DeleteManufacturer;
+using EasyPeasy.Application.Manufacturers.GetAllManufacturers;
+using EasyPeasy.Application.Manufacturers.GetManufacturerById;
+using EasyPeasy.Application.Manufacturers.UpdateManufacturer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

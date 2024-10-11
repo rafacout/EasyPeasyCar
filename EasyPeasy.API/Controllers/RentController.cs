@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Rent.CreateRent;
-using EasyPeasy.Application.Commands.Rent.DeleteRent;
-using EasyPeasy.Application.Commands.Rent.UpdateRent;
-using EasyPeasy.Application.Queries.Rent.GetAllRents;
-using EasyPeasy.Application.Queries.Rent.GetRentById;
+using EasyPeasy.Application.Rents.CreateRent;
+using EasyPeasy.Application.Rents.DeleteRent;
+using EasyPeasy.Application.Rents.GetAllRents;
+using EasyPeasy.Application.Rents.GetRentById;
+using EasyPeasy.Application.Rents.UpdateRent;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

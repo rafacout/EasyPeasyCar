@@ -1,12 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Manufacturer.CreateManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.DeleteManufacturer;
-using EasyPeasy.Application.Commands.Manufacturer.UpdateManufacturer;
-using EasyPeasy.Application.Commands.User.CreateUser;
-using EasyPeasy.Application.Commands.User.DeleteUser;
-using EasyPeasy.Application.Commands.User.UpdateUser;
-using EasyPeasy.Application.Queries.User.GetAllUsers;
-using EasyPeasy.Application.Queries.User.GetUserById;
+using EasyPeasy.Application.Users.CreateUser;
+using EasyPeasy.Application.Users.DeleteUser;
+using EasyPeasy.Application.Users.GetAllUsers;
+using EasyPeasy.Application.Users.GetUserById;
+using EasyPeasy.Application.Users.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

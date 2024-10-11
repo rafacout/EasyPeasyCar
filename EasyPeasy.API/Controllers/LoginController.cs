@@ -1,5 +1,5 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Queries.Login.GetLogin;
+using EasyPeasy.Application.Users.GetLogin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

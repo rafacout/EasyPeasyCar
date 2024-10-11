@@ -1,8 +1,8 @@
 using System.Text;
 using Asp.Versioning;
 using EasyPeasy.Application.Auth;
+using EasyPeasy.Application.Categories.GetAllCategories;
 using EasyPeasy.Application.Mapping;
-using EasyPeasy.Application.Queries.Category.GetAllCategories;
 using EasyPeasy.Domain.Auth;
 using EasyPeasy.Domain.Repositories;
 using EasyPeasy.Infrastructure.Context;

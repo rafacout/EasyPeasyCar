@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Category.CreateCategory;
-using EasyPeasy.Application.Commands.Category.DeleteCategory;
-using EasyPeasy.Application.Commands.Category.UpdateCategory;
-using EasyPeasy.Application.Queries.Category.GetAllCategories;
-using EasyPeasy.Application.Queries.Category.GetCategoryById;
+using EasyPeasy.Application.Categories.CreateCategory;
+using EasyPeasy.Application.Categories.DeleteCategory;
+using EasyPeasy.Application.Categories.GetAllCategories;
+using EasyPeasy.Application.Categories.GetCategoryById;
+using EasyPeasy.Application.Categories.UpdateCategory;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,6 @@ public class CategoryController : ControllerBase
         _mediator = mediator;
     }
 
-    // TODO Rename all metod names to have Async???
     // TODO Fix all warnings
     [HttpGet]
     public async Task<IActionResult> GetAll()

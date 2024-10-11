@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Vehicle.CreateVehicle;
-using EasyPeasy.Application.Commands.Vehicle.DeleteVehicle;
-using EasyPeasy.Application.Commands.Vehicle.UpdateVehicle;
-using EasyPeasy.Application.Queries.Vehicle.GetAllVehicles;
-using EasyPeasy.Application.Queries.Vehicle.GetVehicleById;
+using EasyPeasy.Application.Vehicles.CreateVehicle;
+using EasyPeasy.Application.Vehicles.DeleteVehicle;
+using EasyPeasy.Application.Vehicles.GetAllVehicles;
+using EasyPeasy.Application.Vehicles.GetVehicleById;
+using EasyPeasy.Application.Vehicles.UpdateVehicle;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

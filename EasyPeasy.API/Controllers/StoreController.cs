@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
-using EasyPeasy.Application.Commands.Store.CreateStore;
-using EasyPeasy.Application.Commands.Store.DeleteStore;
-using EasyPeasy.Application.Commands.Store.UpdateStore;
-using EasyPeasy.Application.Queries.Store.GetAllStores;
-using EasyPeasy.Application.Queries.Store.GetStoreById;
+using EasyPeasy.Application.Stores.CreateStore;
+using EasyPeasy.Application.Stores.DeleteStore;
+using EasyPeasy.Application.Stores.GetAllStores;
+using EasyPeasy.Application.Stores.GetStoreById;
+using EasyPeasy.Application.Stores.UpdateStore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
